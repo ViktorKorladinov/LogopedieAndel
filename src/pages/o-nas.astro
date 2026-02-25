@@ -1,0 +1,89 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ContactSidebar from "../components/ContactSidebar.astro";
+---
+
+<Layout title="O nás | Logopedie Anděl">
+    <div class="flex flex-col md:flex-row relative">
+        <div class="flex-1 px-5 md:px-8 py-12 md:pr-14 min-h-[500px]">
+            <h1 class="text-2xl text-brand-blue pb-8 md:w-[400px] leading-snug">
+                O nás
+            </h1>
+
+            <strong class="font-bold text-brand-blue text-base">
+                PhDr. Markéta Terezia Pavlíková
+            </strong>
+            <p class="text-sm pb-4">odborný garant a klinický logoped</p>
+
+            <ul
+                class="font-light text-sm space-y-4 text-brand-gray list-disc ml-4 pb-8"
+            >
+                <li>
+                    praxe od roku 2009 – Ambulance klinické logopedie v Městské
+                    nemocnici v Litoměřicích.
+                </li>
+                <li>
+                    práce s širokým spektrem pacientů, práce s dospělými i
+                    dětskými klienty v ambulanci a na lůžkových odděleních
+                    nemocnice
+                </li>
+                <li>
+                    oddělení rehabilitace, interní oddělení, LDN, neurologie,
+                    ORL, ARO a JIP.
+                </li>
+                <li>
+                    2015 – atestace v oboru klinická logopedie – Ministerstvo
+                    zdravotnictví
+                </li>
+                <li>
+                    2015 – osvědčení k výkonu zdravotnického povolání bez
+                    odborného dohledu v oboru klinický logoped – Ministerstvo
+                    zdravotnictví
+                </li>
+                <li>
+                    2015 – zvláštní kvalifikace pro úhradu výkonů K-3 – Asociace
+                    klinických logopedů
+                </li>
+                <li>
+                    2019 - rigorózní zkouška a rigorózní práce na téma:
+                    Logopedická intervence u dospělých osob s demencí
+                </li>
+            </ul>
+
+            <strong class="font-bold text-brand-gray text-sm"
+                >Absolvované specializační kurzy:</strong
+            ><br />
+            <ul class="list-disc ml-4 text-sm text-brand-gray pb-4">
+                <li>dyslalie</li>
+                <li>ADHD</li>
+                <li>vývojová dyslalie</li>
+                <li>poruchy polykaní u dětí</li>
+                <li>afazologie A a B</li>
+                <li>afazie 1 a 2</li>
+                <li>hlas</li>
+                <li>incipientní koktavost</li>
+                <li>klinická neurologie</li>
+                <li>neurogenní poruchy komunikace u dospělých pacientů</li>
+                <li>vady a poruchy sluchu</li>
+                <li>vyšetřovací testy v klinické logopedii</li>
+            </ul>
+
+            <p class="text-sm pb-4 mt-9">
+                <a
+                    href="tel:+420603110072"
+                    class="block hover:text-brand-blue transition-colors"
+                    >+420 603 110 072</a
+                >
+                <a
+                    href="mailto:marketa.pavlikova@logopedieandel.cz"
+                    class="text-brand-gold font-bold no-underline hover:text-brand-blue"
+                    >marketa.pavlikova@logopedieandel.cz</a
+                >
+            </p>
+        </div>
+
+        <div class="md:mt-[428px]">
+            <ContactSidebar />
+        </div>
+    </div>
+</Layout>

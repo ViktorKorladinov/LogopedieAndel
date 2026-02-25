@@ -1,0 +1,117 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ContactSidebar from "../components/ContactSidebar.astro";
+---
+
+<Layout title="Ceník | Logopedie Anděl">
+    <div class="flex flex-col md:flex-row relative">
+        <div class="flex-1 px-5 md:px-8 py-12 md:pr-14 min-h-[500px]">
+            <h1
+                class="text-2xl font-semibold text-brand-blue pb-10 md:w-[400px] leading-snug"
+            >
+                Ceník
+            </h1>
+
+            <p class="text-sm pb-4">
+                <strong class="font-bold text-base"
+                    >Naše logopedická ambulance má uzavřenou smlouvu se
+                    Všeobecnou zdravotní pojišťovnou (111), pojišťovnou VoZP
+                    (201), ČPZP (205), OZP (207), ZPŠ (209), ZP MV (211) a RBP
+                    (213).</strong
+                >
+            </p>
+
+            <p class="text-sm pb-4"><b class="font-bold">Logopedie:</b></p>
+
+            <table class="w-full text-sm mb-4">
+                <tr>
+                    <td class="pb-4 font-bold text-brand-blue"
+                        >Vstupní logopedické vyšetření (max. 60 min, délka
+                        závisí na problematice)</td
+                    >
+                    <td class="pb-4 text-right whitespace-nowrap pl-4"
+                        >1 200 Kč</td
+                    >
+                </tr>
+                <tr>
+                    <td class="pb-4 font-bold text-brand-blue"
+                        >Logopedie 30 min.</td
+                    >
+                    <td class="pb-4 text-right whitespace-nowrap pl-4"
+                        >600 Kč</td
+                    >
+                </tr>
+                <tr>
+                    <td class="pb-4 font-bold text-brand-blue"
+                        >Logopedie 45 min.</td
+                    >
+                    <td class="pb-4 text-right whitespace-nowrap pl-4"
+                        >900 Kč</td
+                    >
+                </tr>
+                <tr>
+                    <td class="pb-4 font-bold text-brand-blue"
+                        >Logopedie 60 min.</td
+                    >
+                    <td class="pb-4 text-right whitespace-nowrap pl-4"
+                        >1 200 Kč</td
+                    >
+                </tr>
+            </table>
+
+            <p class="text-sm pb-4">
+                Nutnou délku logopedické terapie budeme znát po absolvování
+                vstupního vyšetření.
+            </p>
+
+            <p class="text-sm pb-4 mt-6">
+                <b class="font-bold block"
+                    >Ceny platné pro všechny klienty (výkony nejsou hrazeny
+                    zdravotní pojišťovnou):</b>
+            </p>
+
+            <table class="w-full text-sm mb-4">
+                <tr>
+                    <td class="pb-4 font-bold text-brand-blue"
+                        >Vyšetření řeči a potvrzení na přihlášku k VŠ studiu</td
+                    >
+                    <td class="pb-4 text-right whitespace-nowrap pl-4"
+                        >500 Kč</td
+                    >
+                </tr>
+                <tr>
+                    <td class="pb-4 font-bold text-brand-blue"
+                        >Logopedická zpráva na vyžádání u pravidelně
+                        docházejících klientů</td
+                    >
+                    <td class="pb-4 text-right whitespace-nowrap pl-4"
+                        >500 Kč</td
+                    >
+                </tr>
+                <tr>
+                    <td class="pb-4 font-bold text-brand-blue"
+                        >Logopedická zpráva na vyžádání po jednorázové návštěvě</td
+                    >
+                    <td class="pb-4 text-right whitespace-nowrap pl-4"
+                        >1 500 Kč</td
+                    >
+                </tr>
+            </table>
+
+            <p class="text-sm pb-4">
+                <b class="font-bold block pt-6">Způsob platby:</b>
+                <ul class="list-disc ml-4 text-sm">
+                    <li class="pl-0 pb-5">v hotovosti v ambulanci</li>
+                    <li class="pl-0 pb-5">
+                        bankovních převodem na účet ambulance: 2601074397/2010<br
+                        />(Do poznámky uveďte jméno klienta a datum návštěvy.)
+                    </li>
+                </ul>
+            </p>
+        </div>
+
+        <div class="md:mt-[428px]">
+            <ContactSidebar />
+        </div>
+    </div>
+</Layout>

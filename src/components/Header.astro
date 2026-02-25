@@ -1,0 +1,112 @@
+---
+
+---
+
+<div class="relative max-w-[980px] mx-auto h-[104px] z-[10000]">
+  <a href="/" class="absolute top-4 left-5 md:left-8 block">
+    <img
+      src="/assets/logo.png"
+      width="224"
+      height="57"
+      alt="Logopedie Anděl"
+      class="logo"
+    />
+  </a>
+  <ul
+    class="hidden md:block float-right mt-12 mr-1.5 text-sm tracking-wide relative"
+  >
+    <li class="inline-block pr-6">
+      <a
+        href="/pece-pro-dospele"
+        class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
+        >Péče pro dospělé</a
+      >
+    </li>
+    <li class="inline-block pr-6">
+      <a
+        href="/pece-pro-deti"
+        class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
+        >Péče pro děti</a
+      >
+    </li>
+    <li class="inline-block pr-6">
+      <a
+        href="/o-nas"
+        class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
+        >O nás</a
+      >
+    </li>
+    <li class="inline-block pr-6">
+      <a
+        href="/cenik"
+        class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
+        >Ceník</a
+      >
+    </li>
+    <li class="inline-block">
+      <a
+        href="/kontakty"
+        class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
+        >Kontakty</a
+      >
+    </li>
+  </ul>
+  <button
+    class="md:hidden absolute top-7 right-2 text-3xl text-gray-600 font-bold p-2.5"
+    id="responsivemenu">&equiv;</button
+  >
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden absolute top-[104px] w-full bg-white border-t border-brand-lightgray z-[100] text-sm"
+  >
+    <ul class="flex flex-col">
+      <li class="border-b border-brand-lightgray">
+        <a
+          href="/pece-pro-dospele"
+          class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
+          >Péče pro dospělé</a
+        >
+      </li>
+      <li class="border-b border-brand-lightgray">
+        <a
+          href="/pece-pro-deti"
+          class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
+          >Péče pro děti</a
+        >
+      </li>
+      <li class="border-b border-brand-lightgray">
+        <a
+          href="/o-nas"
+          class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
+          >O nás</a
+        >
+      </li>
+      <li class="border-b border-brand-lightgray">
+        <a
+          href="/cenik"
+          class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
+          >Ceník</a
+        >
+      </li>
+      <li class="border-b border-brand-lightgray">
+        <a
+          href="/kontakty"
+          class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
+          >Kontakty</a
+        >
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  const menuBtn = document.getElementById("responsivemenu");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  if (menuBtn && mobileMenu) {
+    menuBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      mobileMenu.classList.toggle("hidden");
+    });
+  }
+</script>

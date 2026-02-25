@@ -1,1 +1,19 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&subset=latin-ext');
 @import "tailwindcss";
+
+@theme {
+  --font-sans: 'Source Sans Pro', Tahoma, Verdana, Arial, sans-serif;
+  --color-brand-blue: #0e4681;
+  --color-brand-gold: #e6b23b;
+  --color-brand-gray: #716960;
+  --color-brand-lightgray: #eceae7;
+  --color-brand-bluegray: #a2aebc;
+  --color-brand-brown: #b9b2a8;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}

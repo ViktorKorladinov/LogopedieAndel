@@ -1,11 +1,75 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
+import ContactSidebar from "../components/ContactSidebar.astro";
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Logopedie Anděl">
+    <div class="flex flex-col md:flex-row relative">
+        <div class="flex-1 px-5 md:px-8 py-12 md:pr-14 min-h-[500px]">
+            <h1 class="text-2xl text-brand-blue pb-5 md:w-[400px] leading-snug">
+                Jsme specializovaná logopedická ambulance pro dospělé a děti
+            </h1>
+
+            <p
+                class="text-lg text-brand-gray leading-snug pb-5 md:max-w-[400px]"
+            >
+                Naše ambulance poskytuje komplexní péči v oblasti klinické
+                logopedie. Zaměřujeme se na preventivní, diagnostickou,
+                terapeutickou a poradenskou péči pro celé spektrum narušené
+                komunikační schopnosti dospělých i dětí.
+            </p>
+
+            <p class="text-sm text-brand-gray pb-4 md:max-w-[400px]">
+                Cílem logopedické péče je vždy vzájemná spolupráce s rodinou,
+                zdravotnickými pracovníky a pedagogy. Usilujeme u všech klientů
+                o dosažení maximální komunikační schopnosti.
+            </p>
+
+            <div class="text-2xl text-brand-gold mt-5 md:mt-16 mb-14">
+                Kdy nás navštívit?
+                <br />
+
+                <a
+                    href="/pece-pro-dospele"
+                    class="text-sm text-white bg-brand-gold inline-block py-2.5 w-[130px] md:w-[188px] text-center no-underline mr-4 mt-20 md:mt-4 relative hover:bg-brand-blue font-bold"
+                    >DOSPĚLÍ</a
+                >
+                <a
+                    href="/pece-pro-deti"
+                    class="text-sm text-white bg-brand-gold inline-block py-2.5 w-[130px] md:w-[188px] text-center no-underline mt-20 md:mt-4 relative hover:bg-brand-blue font-bold after:content-[''] after:bg-[url('/assets/button-child-mobile.png')] md:after:bg-[url('/assets/button-child.png')] after:absolute after:w-[121px] md:after:w-[175px] after:h-[71px] md:after:h-[102px] after:top-[-65px] md:after:top-[-95px] after:left-1 md:after:left-2.5"
+                    >DĚTI</a
+                >
+            </div>
+
+            <p class="text-sm pb-4 md:max-w-[613px]">
+                <strong class="font-bold text-brand-blue text-base"
+                    >Z kapacitních důvodů dočasně omezená možnost přijímat nové
+                    klienty</strong
+                > (nutnost doporučení od obvodního lékaře nebo jiného lékaře specialisty).
+            </p>
+
+            <p class="text-sm pb-4 md:max-w-[613px]">
+                Logopedická terapie je poskytovaná <strong
+                    class="font-bold text-brand-blue text-base"
+                    >klientům VZP (111), VoZP (201), ČPZP (205), OZP (207), ZPŠ
+                    (209), ZP MV (211) a RBP (213) zdarma</strong
+                >, bez dlouhých čekacích lhůt.
+            </p>
+
+            <p class="text-sm pb-4 md:max-w-[613px]">
+                Nabízíme také možnost logopedického vyšetření a potvrzení na
+                přihlášku pro SŠ a VŠ.
+                <br /><br />
+                <strong class="font-bold text-brand-blue text-base"
+                    >BEZPEČNOSTNÍ OPATŘENÍ ANTI-COVID: Naše hygienické standardy
+                    jsou na nejvyšší úrovni, ambulance je vybavena ochrannými
+                    pomůckami. Pečlivě dbáme o Vaši bezpečnost!</strong
+                >
+            </p>
+        </div>
+
+        <div class="md:mt-[428px]">
+            <ContactSidebar />
+        </div>
+    </div>
 </Layout>
