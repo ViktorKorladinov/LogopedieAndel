@@ -13,40 +13,30 @@ if (Astro.request.method === "POST") {
         const name = data.get("name")?.toString() || "";
         const email = data.get("email")?.toString() || "";
         const message = data.get("message")?.toString() || "";
-        const file = data.get("file");
 
         if (!name || !email) {
             error = "Jméno a e-mail jsou povinné.";
         } else {
             const resendApiKey =
-                import.meta.env.RESEND_API_KEY || "re_123456789";
-            const resend = new Resend(resendApiKey);
+                import.meta.env.RESEND_API_KEY || process.env.RESEND_API_KEY;
+            const formEmailTo =
+                import.meta.env.FORM_EMAIL_TO || process.env.FORM_EMAIL_TO;
 
-            const attachments = [];
-            if (file && file instanceof File && file.size > 0) {
-                const arrayBuffer = await file.arrayBuffer();
+            if (!resendApiKey || !formEmailTo) {
+                error = "Chyba serveru, zkuste to prosím později.";
+            } else {
+                const resend = new Resend(resendApiKey);
 
-                // Zpracování do Bufferu přes node:buffer, které je běžně podporováno u většiny adaptérů včetně CF (s node compat)
-                // Alternativou je posílat jako base64 řetězec, který resend také podporuje.
-                const { Buffer } = await import("node:buffer");
-                const content = Buffer.from(arrayBuffer);
-
-                attachments.push({
-                    filename: file.name,
-                    content: content,
+                await resend.emails.send({
+                    from: "onboarding@resend.dev",
+                    to: [formEmailTo],
+                    subject: `Nová zpráva od: ${name}`,
+                    html: `<p><strong>Jméno:</strong> ${name}</p>
+                   <p><strong>E-mail:</strong> ${email}</p>
+                   <p><strong>Zpráva:</strong> ${message}</p>`,
                 });
+                success = true;
             }
-
-            await resend.emails.send({
-                from: "Nahrání Formuláře <onboarding@resend.dev>", // Uživatel by si zde měl nastavit vlastní verifikovanou doménu
-                to: ["your-email@example.com"], // Zde nastavte Váš reálný e-mail
-                subject: `Nový formulář od: ${name}`,
-                html: `<p><strong>Jméno:</strong> ${name}</p>
-               <p><strong>E-mail:</strong> ${email}</p>
-               <p><strong>Zpráva:</strong> ${message}</p>`,
-                attachments,
-            });
-            success = true;
         }
     } catch (e) {
         if (e instanceof Error) {
@@ -58,24 +48,24 @@ if (Astro.request.method === "POST") {
 }
 ---
 
-<Layout title="Nahrát formulář | Logopedie Anděl">
+<Layout title="Napsat nám | Logopedie Anděl">
     <div class="flex flex-col md:flex-row relative">
         <div class="flex-1 px-5 md:px-8 py-12 md:pr-14 min-h-[500px]">
             <h1 class="text-2xl text-brand-blue pb-5 md:w-[400px] leading-snug">
-                Nahrát formulář
+                Napsat nám
             </h1>
 
             <p
                 class="text-lg text-brand-gray leading-snug pb-5 md:max-w-[400px]"
             >
-                Zde nám můžete bezpečně zaslat vyplněné formuláře nebo jiné
-                dokumenty.
+                Zde nám můžete zanechat zprávu a my se Vám v co nejkratší době
+                ozveme zpět.
             </p>
 
             {
                 success && (
                     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
-                        Formulář byl úspěšně odeslán. Děkujeme!
+                        Zpráva byla úspěšně odeslána. Děkujeme!
                     </div>
                 )
             }
@@ -92,7 +82,6 @@ if (Astro.request.method === "POST") {
                 !success && (
                     <form
                         method="POST"
-                        enctype="multipart/form-data"
                         class="max-w-[500px] flex flex-col gap-4"
                     >
                         <div>
@@ -135,22 +124,8 @@ if (Astro.request.method === "POST") {
                             <textarea
                                 id="message"
                                 name="message"
-                                rows="4"
+                                rows="5"
                                 class="w-full border border-brand-gray p-2 focus:outline-none focus:border-brand-blue"
-                            />
-                        </div>
-                        <div>
-                            <label
-                                for="file"
-                                class="block text-brand-blue font-semibold mb-1"
-                            >
-                                Vyberte soubor (formulář)
-                            </label>
-                            <input
-                                type="file"
-                                id="file"
-                                name="file"
-                                class="w-full border border-brand-gray p-2"
                             />
                         </div>
 
