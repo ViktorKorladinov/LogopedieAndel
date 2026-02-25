@@ -17,10 +17,17 @@ if (Astro.request.method === "POST") {
         if (!name || !email) {
             error = "Jméno a e-mail jsou povinné.";
         } else {
+            const runtime = Astro.locals.runtime || {};
+            const env = runtime.env || {};
+
             const resendApiKey =
-                import.meta.env.RESEND_API_KEY || process.env.RESEND_API_KEY;
+                env.RESEND_API_KEY ||
+                import.meta.env.RESEND_API_KEY ||
+                process.env.RESEND_API_KEY;
             const formEmailTo =
-                import.meta.env.FORM_EMAIL_TO || process.env.FORM_EMAIL_TO;
+                env.FORM_EMAIL_TO ||
+                import.meta.env.FORM_EMAIL_TO ||
+                process.env.FORM_EMAIL_TO;
 
             if (!resendApiKey || !formEmailTo) {
                 error = "Chyba serveru, zkuste to prosím později.";
