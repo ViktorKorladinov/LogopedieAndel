@@ -20,11 +20,6 @@ if (Astro.request.method === "POST") {
             const runtime = Astro.locals.runtime || {};
             const env = runtime.env || {};
 
-            console.log(
-                "Environment keys read locally via runtime:",
-                Object.keys(env),
-            );
-
             const resendApiKey =
                 env.RESEND_API_KEY ||
                 import.meta.env.RESEND_API_KEY ||
@@ -34,17 +29,9 @@ if (Astro.request.method === "POST") {
                 import.meta.env.FORM_EMAIL_TO ||
                 process.env.FORM_EMAIL_TO;
 
-            console.log("resendApiKey exists:", !!resendApiKey);
-            console.log("formEmailTo exists:", !!formEmailTo);
-
             if (!resendApiKey || !formEmailTo) {
-                console.error("Missing required keys for sending emails.");
                 error = "Chyba serveru, zkuste to prosím později.";
             } else {
-                console.log(
-                    "Preparing to send email via Resend to:",
-                    formEmailTo,
-                );
                 const resend = new Resend(resendApiKey);
 
                 const response = await resend.emails.send({
@@ -55,13 +42,8 @@ if (Astro.request.method === "POST") {
                    <p><strong>E-mail:</strong> ${email}</p>
                    <p><strong>Zpráva:</strong> ${message}</p>`,
                 });
-                console.log("Resend API response:", response);
 
                 if (response.error) {
-                    console.error(
-                        "Resend API returned an error:",
-                        response.error,
-                    );
                     error = `Nepodařilo se odeslat email: ${response.error.message}`;
                 } else {
                     success = true;
@@ -69,7 +51,6 @@ if (Astro.request.method === "POST") {
             }
         }
     } catch (e) {
-        console.error("Caught unhandled exception during form submission:", e);
         if (e instanceof Error) {
             error = e.message;
         } else {
