@@ -2,7 +2,7 @@
 
 ---
 
-<div class="relative max-w-[980px] mx-auto h-[104px] z-[10000]">
+<header class="relative max-w-[980px] mx-auto h-[104px] z-[10000]">
   <a href="/" class="absolute top-4 left-5 lg:left-8 block">
     <img
       src="/assets/logo.png"
@@ -12,106 +12,113 @@
       class="logo"
     />
   </a>
-  <ul
+  <nav
+    aria-label="Hlavní navigace"
     class="hidden lg:block float-right mt-12 mr-5 lg:mr-8 text-sm tracking-wide relative"
   >
-    <li class="inline-block pr-6">
-      <a
-        href="/pece-pro-dospele"
-        class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
-        >Péče pro dospělé</a
-      >
-    </li>
-    <li class="inline-block pr-6">
-      <a
-        href="/pece-pro-deti"
-        class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
-        >Péče pro děti</a
-      >
-    </li>
-    <li class="inline-block pr-6">
-      <a
-        href="/o-nas"
-        class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
-        >O nás</a
-      >
-    </li>
-    <li class="inline-block pr-6">
-      <a
-        href="/cenik"
-        class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
-        >Ceník</a
-      >
-    </li>
-    <li class="inline-block pr-6">
-      <a
-        href="/kontakty"
-        class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
-        >Kontakty</a
-      >
-    </li>
-    <li class="inline-block">
-      <a
-        href="/nahrat"
-        class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
-        >Napsat nám</a
-      >
-    </li>
-  </ul>
-  <button
-    class="lg:hidden absolute top-7 right-2 text-3xl hover:text-brand-gold hover:cursor-pointer text-gray-600 font-bold p-2.5"
-    id="responsivemenu">&equiv;</button
-  >
-  <div
-    id="mobile-menu"
-    class="hidden lg:hidden absolute top-[104px] w-full bg-white border-t border-brand-lightgray z-[100] text-sm"
-  >
-    <ul class="flex flex-col">
-      <li class="border-b border-brand-lightgray">
+    <ul>
+      <li class="inline-block pr-6">
         <a
           href="/pece-pro-dospele"
-          class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
+          class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
           >Péče pro dospělé</a
         >
       </li>
-      <li class="border-b border-brand-lightgray">
+      <li class="inline-block pr-6">
         <a
           href="/pece-pro-deti"
-          class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
+          class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
           >Péče pro děti</a
         >
       </li>
-      <li class="border-b border-brand-lightgray">
+      <li class="inline-block pr-6">
         <a
           href="/o-nas"
-          class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
+          class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
           >O nás</a
         >
       </li>
-      <li class="border-b border-brand-lightgray">
+      <li class="inline-block pr-6">
         <a
           href="/cenik"
-          class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
+          class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
           >Ceník</a
         >
       </li>
-      <li class="border-b border-brand-lightgray">
+      <li class="inline-block pr-6">
         <a
           href="/kontakty"
-          class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
+          class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
           >Kontakty</a
         >
       </li>
-      <li class="border-b border-brand-lightgray">
+      <li class="inline-block">
         <a
           href="/nahrat"
-          class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
+          class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
           >Napsat nám</a
         >
       </li>
     </ul>
-  </div>
-</div>
+  </nav>
+</header>
+<button
+  class="lg:hidden absolute top-7 right-2 text-3xl hover:text-brand-gold hover:cursor-pointer text-gray-600 font-bold p-2.5"
+  id="responsivemenu"
+  aria-expanded="false"
+  aria-controls="mobile-menu"
+  aria-label="Otevřít menu">&equiv;</button
+>
+<nav
+  id="mobile-menu"
+  aria-label="Mobilní navigace"
+  class="hidden lg:hidden absolute top-[104px] w-full bg-white border-t border-brand-lightgray z-[100] text-sm"
+>
+  <ul class="flex flex-col">
+    <li class="border-b border-brand-lightgray">
+      <a
+        href="/pece-pro-dospele"
+        class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
+        >Péče pro dospělé</a
+      >
+    </li>
+    <li class="border-b border-brand-lightgray">
+      <a
+        href="/pece-pro-deti"
+        class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
+        >Péče pro děti</a
+      >
+    </li>
+    <li class="border-b border-brand-lightgray">
+      <a
+        href="/o-nas"
+        class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
+        >O nás</a
+      >
+    </li>
+    <li class="border-b border-brand-lightgray">
+      <a
+        href="/cenik"
+        class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
+        >Ceník</a
+      >
+    </li>
+    <li class="border-b border-brand-lightgray">
+      <a
+        href="/kontakty"
+        class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
+        >Kontakty</a
+      >
+    </li>
+    <li class="border-b border-brand-lightgray">
+      <a
+        href="/nahrat"
+        class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
+        >Napsat nám</a
+      >
+    </li>
+  </ul>
+</nav>
 
 <script>
   const menuBtn = document.getElementById("responsivemenu");
@@ -121,6 +128,12 @@
     menuBtn.addEventListener("click", (e) => {
       e.preventDefault();
       mobileMenu.classList.toggle("hidden");
+      const isExpanded = menuBtn.getAttribute("aria-expanded") === "true";
+      menuBtn.setAttribute("aria-expanded", String(!isExpanded));
+      menuBtn.setAttribute(
+        "aria-label",
+        !isExpanded ? "Zavřít menu" : "Otevřít menu",
+      );
     });
   }
 </script>

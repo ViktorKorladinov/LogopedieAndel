@@ -3,7 +3,16 @@ import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 
-const { title = "Logopedie Anděl" } = Astro.props;
+const {
+	title = "Logopedie Anděl",
+	description = "Jsme specializovaná logopedická ambulance pro dospělé a děti. Nabízíme komplexní péči v Praze 5 na Andělu.",
+	image = "/assets/bg-img-default.jpg",
+} = Astro.props;
+
+const canonicalURL = new URL(
+	Astro.url.pathname,
+	Astro.site || "https://www.logopedieandel.pages.dev",
+);
 ---
 
 <!doctype html>
@@ -17,12 +26,47 @@ const { title = "Logopedie Anděl" } = Astro.props;
 			href="/img/favicons/favicon-32x32.png"
 			sizes="32x32"
 		/>
-		<meta name="generator" content={Astro.generator} />
+
+		<!-- Primary Meta Tags -->
 		<title>{title}</title>
+		<meta name="title" content={title} />
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalURL} />
+
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta
+			property="og:image"
+			content={new URL(
+				image,
+				Astro.site || "https://www.logopedieandel.pages.dev",
+			)}
+		/>
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content={canonicalURL} />
+		<meta property="twitter:title" content={title} />
+		<meta property="twitter:description" content={description} />
+		<meta
+			property="twitter:image"
+			content={new URL(
+				image,
+				Astro.site || "https://www.logopedieandel.pages.dev",
+			)}
+		/>
+
+		<meta name="generator" content={Astro.generator} />
 	</head>
 	<body class="">
 		<Header />
-		<div class="main relative w-full clear-both pt-[183px] md:pt-0">
+		<main
+			id="main-content"
+			class="main relative w-full clear-both pt-[183px] md:pt-0"
+		>
 			<div
 				class="absolute top-0 left-0 w-full h-[500px] bg-[url('/assets/bg-main.png')] bg-repeat-x z-0"
 			>
@@ -36,8 +80,7 @@ const { title = "Logopedie Anděl" } = Astro.props;
 			<div class="max-w-[980px] mx-auto relative z-20 clear-both">
 				<slot />
 			</div>
-		</div>
+		</main>
+		<Footer />
 	</body>
-
-	<Footer />
 </html>

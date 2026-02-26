@@ -5,8 +5,14 @@ import ContactSidebar from "../components/ContactSidebar.astro";
 
 <Layout title="Logopedie Anděl">
     <div class="flex flex-col md:flex-row relative">
-        <div class="flex-1 px-5 md:px-8 py-12 md:pr-14 min-h-[500px]">
-            <h1 class="text-2xl text-brand-blue pb-5 md:w-[400px] leading-snug">
+        <section
+            aria-labelledby="page-heading"
+            class="flex-1 px-5 md:px-8 py-12 md:pr-14 min-h-[500px]"
+        >
+            <h1
+                id="page-heading"
+                class="text-2xl text-brand-blue pb-5 md:w-[400px] leading-snug"
+            >
                 Jsme specializovaná logopedická ambulance pro dospělé a děti
             </h1>
 
@@ -66,7 +72,7 @@ import ContactSidebar from "../components/ContactSidebar.astro";
                     pomůckami. Pečlivě dbáme o Vaši bezpečnost!</strong
                 >
             </p>
-        </div>
+        </section>
 
         <ContactSidebar />
     </div>

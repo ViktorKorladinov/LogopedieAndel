@@ -5,8 +5,14 @@ import ContactSidebar from "../components/ContactSidebar.astro";
 
 <Layout title="Kontakty | Logopedie Anděl">
     <div class="flex flex-col md:flex-row relative">
-        <div class="flex-1 px-5 md:px-8 py-12 md:pr-14 min-h-[500px] mb-10">
-            <h1 class="text-2xl text-brand-blue pb-8 md:w-[400px] leading-snug">
+        <section
+            aria-labelledby="page-heading"
+            class="flex-1 px-5 md:px-8 py-12 md:pr-14 min-h-[500px] mb-10"
+        >
+            <h1
+                id="page-heading"
+                class="text-2xl text-brand-blue pb-8 md:w-[400px] leading-snug"
+            >
                 Kontakty
             </h1>
 
@@ -35,7 +41,9 @@ import ContactSidebar from "../components/ContactSidebar.astro";
                     Metro – trasa B – stanice Anděl – výstup směr Na Knížecí a
                     Ženské domovy
                 </p>
-                <p class="text-sm pb-4 text-brand-gray">Tramvaj č. 7 – zastávka Radlická</p>
+                <p class="text-sm pb-4 text-brand-gray">
+                    Tramvaj č. 7 – zastávka Radlická
+                </p>
                 <p class="text-sm pb-4 text-brand-gray">
                     Autobusy č. 231, 137, 167, 191, 120 – zastávka Na Knížecí
                 </p>
@@ -43,7 +51,9 @@ import ContactSidebar from "../components/ContactSidebar.astro";
                     Autem – možnost parkovat zdarma 3 hodiny v OC Nový Smíchov
                     nebo na hlídaném parkovišti za Ženskými domovy
                 </p>
-                <p class="text-sm pb-4 text-brand-gray">Budova má bezbariérový přístup.</p>
+                <p class="text-sm pb-4 text-brand-gray">
+                    Budova má bezbariérový přístup.
+                </p>
             </div>
 
             <iframe
@@ -51,8 +61,9 @@ import ContactSidebar from "../components/ContactSidebar.astro";
                 class="w-full h-[300px] md:w-[400px] md:h-[400px] lg:w-[600px] lg:h-[500px] border-0"
                 allowfullscreen
                 loading="lazy"
+                title="Mapa polohy ambulance, Google Maps"
                 referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
+        </section>
 
         <ContactSidebar />
     </div>

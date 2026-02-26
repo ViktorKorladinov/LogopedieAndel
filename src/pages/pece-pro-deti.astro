@@ -5,8 +5,14 @@ import ContactSidebar from "../components/ContactSidebar.astro";
 
 <Layout title="Péče pro děti | Logopedie Anděl">
     <div class="flex flex-col md:flex-row relative">
-        <div class="flex-1 px-5 md:px-8 py-12 md:pr-14 min-h-[500px]">
-            <h1 class="text-2xl text-brand-blue pb-8 md:w-[400px] leading-snug">
+        <section
+            aria-labelledby="page-heading"
+            class="flex-1 px-5 md:px-8 py-12 md:pr-14 min-h-[500px]"
+        >
+            <h1
+                id="page-heading"
+                class="text-2xl text-brand-blue pb-8 md:w-[400px] leading-snug"
+            >
                 Logopedická péče pro děti
             </h1>
 
@@ -62,7 +68,7 @@ import ContactSidebar from "../components/ContactSidebar.astro";
                     </li>
                 </ul>
             </p>
-        </div>
+        </section>
 
         <ContactSidebar />
     </div>
