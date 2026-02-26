@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.logopedieandel.cz/sitemap-index.xml
+Sitemap: https://www.logopedieandel.pages.dev/sitemap-index.xml
