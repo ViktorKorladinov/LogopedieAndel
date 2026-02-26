@@ -6,20 +6,18 @@ import ContactSidebar from "../components/ContactSidebar.astro";
 <Layout title="Kontakty | Logopedie Anděl">
     <div class="flex flex-col md:flex-row relative">
         <div class="flex-1 px-5 md:px-8 py-12 md:pr-14 min-h-[500px] mb-10">
-            <h1
-                class="text-2xl font-semibold text-brand-blue pb-10 md:w-[400px] leading-snug"
-            >
+            <h1 class="text-2xl text-brand-blue pb-8 md:w-[400px] leading-snug">
                 Kontakty
             </h1>
 
             <div>
-                <p class="text-sm pb-4">
+                <p class="text-sm text-brand-gray pb-4">
                     Ambulance se nachází v budově Ženské domovy, Ostrovského
                     253/3, Praha 5, 150 00 ve 2. patře – dveře číslo 2064 a
                     2065.
                 </p>
 
-                <p class="text-sm pb-4">
+                <p class="text-sm text-brand-gray pb-4">
                     telefon: +420 735 123 348, +420 736 198 769<br />
                     <a
                         href="mailto:info@logopedieandel.cz"
@@ -29,35 +27,31 @@ import ContactSidebar from "../components/ContactSidebar.astro";
                 </p>
 
                 <p class="text-sm pb-4">
-                    <strong class="font-bold text-base"
+                    <strong class="font-semibold text-brand-blue text-base"
                         >Jak se k nám dostanete:</strong
                     >
                 </p>
-                <p class="text-sm pb-4">
+                <p class="text-sm pb-4 text-brand-gray">
                     Metro – trasa B – stanice Anděl – výstup směr Na Knížecí a
                     Ženské domovy
                 </p>
-                <p class="text-sm pb-4">Tramvaj č. 7 – zastávka Radlická</p>
-                <p class="text-sm pb-4">
+                <p class="text-sm pb-4 text-brand-gray">Tramvaj č. 7 – zastávka Radlická</p>
+                <p class="text-sm pb-4 text-brand-gray">
                     Autobusy č. 231, 137, 167, 191, 120 – zastávka Na Knížecí
                 </p>
-                <p class="text-sm pb-4">
+                <p class="text-sm pb-4 text-brand-gray">
                     Autem – možnost parkovat zdarma 3 hodiny v OC Nový Smíchov
                     nebo na hlídaném parkovišti za Ženskými domovy
                 </p>
-                <p class="text-sm pb-4">Budova má bezbariérový přístup.</p>
+                <p class="text-sm pb-4 text-brand-gray">Budova má bezbariérový přístup.</p>
             </div>
 
-            <br /><br />
-
-            <div
-                class="relative pb-[65.25%] h-0 overflow-auto touch-pan-scroll"
-            >
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2560.942882406652!2d14.400577616041268!3d50.068631322683196!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470b945723b9cd95%3A0xa6e66939b6cd83ac!2sOstrovsk%C3%A9ho+253%2F3%2C+150+00+Praha+5-Sm%C3%ADchov!5e0!3m2!1scs!2scz!4v1486764660478"
-                    class="absolute top-0 left-0 w-full h-full pointer-events-none border-0"
-                    allowfullscreen></iframe>
-            </div>
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2560.9426838387867!2d14.397899092321154!3d50.06863504136061!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470b945723b9cd95%3A0x92ef7287e8eae561!2sLogopedie%20And%C4%9Bl.s.r.o.!5e0!3m2!1sen!2sus!4v1772098296921!5m2!1sen!2sus"
+                class="w-full h-[300px] md:w-[400px] md:h-[400px] lg:w-[600px] lg:h-[500px] border-0"
+                allowfullscreen
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
 
         <ContactSidebar />
