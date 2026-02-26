@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://www.logopedieandelpages.dev',
+  site: 'https://www.logopedieandel.pages.dev',
   output: 'static',
   adapter: cloudflare({
     imageService: 'compile',
