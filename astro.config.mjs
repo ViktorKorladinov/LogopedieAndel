@@ -4,6 +4,8 @@ import tailwindcss from '@tailwindcss/vite';
 import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
 
+import turnstile from 'astro-turnstile';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.logopedieandel.pages.dev',
@@ -11,7 +13,7 @@ export default defineConfig({
   adapter: cloudflare({
     imageService: 'compile',
   }),
-  integrations: [sitemap()],
+  integrations: [sitemap(), turnstile()],
   vite: {
     plugins: [tailwindcss()]
   }

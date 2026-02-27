@@ -3,6 +3,7 @@ export const prerender = false;
 import Layout from "../layouts/Layout.astro";
 import ContactSidebar from "../components/ContactSidebar.astro";
 import { Resend } from "resend";
+import TurnstileWidget from "astro-turnstile:components/TurnstileWidget";
 
 let success = false;
 let error = "";
@@ -154,7 +155,7 @@ if (Astro.request.method === "POST") {
                                 class="w-full border border-brand-gray p-2 focus:outline-none focus:border-brand-blue"
                             />
                         </div>
-
+<TurnstileWidget />
                         <button
                             type="submit"
                             class="bg-brand-gold text-white font-bold py-3 mt-4 w-[200px] text-center hover:bg-brand-blue transition-colors"
