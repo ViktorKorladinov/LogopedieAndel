@@ -1,0 +1,20 @@
+---
+const runtime = Astro.locals.runtime || {};
+const env = runtime.env || {};
+
+const siteKey = env.TURNSTILE_SITE_KEY ||
+                import.meta.env.TURNSTILE_SITE_KEY ||
+                process.env.TURNSTILE_SITE_KEY;
+---
+
+<div class="cf-turnstile" data-sitekey={siteKey}></div>
+
+<script>
+  if (!window.turnstile) {
+    const script = document.createElement('script');
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+</script>
