@@ -1,127 +1,78 @@
 ---
-
+const navLinks = [
+  { href: "/pece-pro-dospele", label: "Péče pro dospělé" },
+  { href: "/pece-pro-deti", label: "Péče pro děti" },
+  { href: "/o-nas", label: "O nás" },
+  { href: "/cenik", label: "Ceník" },
+  { href: "/kontakty", label: "Kontakty" },
+  { href: "/formular", label: "Vyplňte formulář" },
+];
 ---
 
 <header
-  class="relative max-w-[980px] mx-auto h-[104px] px-5 lg:px-8 flex items-center justify-between z-[10000]"
+  class="lg:sticky top-0 z-[10000] w-full bg-white/95 backdrop-blur-sm shadow-sm border-b border-brand-lightgray"
 >
-  <a href="/" class="block shrink-0">
-    <img
-      src="/assets/logo.png"
-      width="224"
-      height="57"
-      alt="Logopedie Anděl"
-      class="logo"
-    />
-  </a>
-  <nav
-    aria-label="Hlavní navigace"
-    class="hidden lg:block text-sm tracking-wide"
+  <div
+    class="relative max-w-[980px] mx-auto h-[104px] px-5 lg:px-8 flex items-center justify-between"
   >
-    <ul class="flex items-center gap-6 pt-3">
-      <li>
-        <a
-          href="/pece-pro-dospele"
-          class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
-          >Péče pro dospělé</a
-        >
-      </li>
-      <li>
-        <a
-          href="/pece-pro-deti"
-          class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
-          >Péče pro děti</a
-        >
-      </li>
-      <li>
-        <a
-          href="/o-nas"
-          class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
-          >O nás</a
-        >
-      </li>
-      <li>
-        <a
-          href="/cenik"
-          class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
-          >Ceník</a
-        >
-      </li>
-      <li>
-        <a
-          href="/kontakty"
-          class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
-          >Kontakty</a
-        >
-      </li>
-      <li>
-        <a
-          href="/nahrat"
-          class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
-          >Napsat nám</a
-        >
-      </li>
-    </ul>
-  </nav>
+    <a href="/" class="block shrink-0">
+      <img
+        src="/assets/logo.png"
+        width="224"
+        height="57"
+        alt="Logopedie Anděl"
+        class="logo"
+      />
+    </a>
+    <nav
+      aria-label="Hlavní navigace"
+      class="hidden lg:block text-sm tracking-wide"
+    >
+      <ul class="flex items-center gap-6 pt-3">
+        {
+          navLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-brand-gray font-semibold pb-1 hover:text-brand-gold transition-colors duration-100 uppercase"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
 
-  <button
-    class="lg:hidden text-3xl hover:text-brand-gold hover:cursor-pointer text-gray-600 font-bold p-2.5"
-    id="responsivemenu"
-    aria-expanded="false"
-    aria-controls="mobile-menu"
-    aria-label="Otevřít menu">&equiv;</button
-  >
+    <button
+      class="lg:hidden text-3xl hover:text-brand-gold hover:cursor-pointer text-gray-600 font-bold p-2.5"
+      id="responsivemenu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      aria-label="Otevřít menu">&equiv;</button
+    >
 
-  <nav
-    id="mobile-menu"
-    aria-label="Mobilní navigace"
-    class="hidden lg:hidden absolute top-[104px] left-0 w-full bg-white border-t border-brand-lightgray z-[100] text-sm shadow-md"
-  >
-    <ul class="flex flex-col">
-      <li class="border-b border-brand-lightgray">
-        <a
-          href="/pece-pro-dospele"
-          class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
-          >Péče pro dospělé</a
-        >
-      </li>
-      <li class="border-b border-brand-lightgray">
-        <a
-          href="/pece-pro-deti"
-          class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
-          >Péče pro děti</a
-        >
-      </li>
-      <li class="border-b border-brand-lightgray">
-        <a
-          href="/o-nas"
-          class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
-          >O nás</a
-        >
-      </li>
-      <li class="border-b border-brand-lightgray">
-        <a
-          href="/cenik"
-          class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
-          >Ceník</a
-        >
-      </li>
-      <li class="border-b border-brand-lightgray">
-        <a
-          href="/kontakty"
-          class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
-          >Kontakty</a
-        >
-      </li>
-      <li class="border-b border-brand-lightgray">
-        <a
-          href="/nahrat"
-          class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
-          >Napsat nám</a
-        >
-      </li>
-    </ul>
-  </nav>
+    <nav
+      id="mobile-menu"
+      aria-label="Mobilní navigace"
+      class="hidden lg:hidden absolute top-[104px] left-0 w-full bg-white border-t border-brand-lightgray z-[100] text-sm shadow-md"
+    >
+      <ul class="flex flex-col">
+        {
+          navLinks.map((link) => (
+            <li class="border-b border-brand-lightgray">
+              <a
+                href={link.href}
+                class="block py-3 px-5 text-brand-gray hover:text-brand-gold relative after:content-['►'] after:absolute after:right-4 after:top-3 uppercase"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
 </header>
 
 <script>
