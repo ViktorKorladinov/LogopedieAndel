@@ -1,0 +1,174 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Turnstile from "../components/Turnstile.astro";
+import { handlePatientForm } from "../utils/formHandler";
+
+export const prerender = false;
+
+let success = false;
+let error = "";
+
+if (Astro.request.method === "POST") {
+    const result = await handlePatientForm(Astro.request, Astro.locals);
+    success = result.success;
+    error = result.error || "";
+}
+---
+
+<Layout title="Dokumentace pacienta | Logopedie Anděl" hideBackground={true}>
+    <div class="py-12 px-4 sm:px-6 lg:px-8 font-sans min-h-screen">
+        <div class="max-w-4xl mx-auto bg-white border-4 border-brand-blue p-6 sm:p-10 shadow-2xl relative">
+            
+            <!-- decorative tax form elements -->
+            <div class="hidden md:block absolute top-0 right-0 border-l-4 border-b-4 border-brand-blue p-4 w-56 text-xs font-bold font-mono text-center">
+                LOGOPEDIE ANDĚL<br/>
+                VZOR: LA-2026/A
+            </div>
+            
+            <header class="mb-8 border-b-4 border-brand-blue pb-6 mt-8 md:mt-0 md:pt-4 md:pr-60">
+                <h1 class="text-3xl md:text-5xl font-brand-blue tracking-tighter uppercase text-brand-blue leading-tight">
+                    Záznam o pacientovi
+                </h1>
+                <p class="text-sm font-bold uppercase tracking-widest mt-2 text-brand-blue">
+                    Vstupní logopedické vyšetření a anamnéza
+                </p>
+                <div class="mt-4 flex flex-col sm:flex-row gap-4 font-mono text-sm font-bold">
+                    <div class="flex items-end">
+                        <span class="mr-2">IČP:</span>
+                        <div class="border-b-2 border-dotted border-brand-blue w-24"></div>
+                    </div>
+                    <div class="flex items-end">
+                        <span class="mr-2">Datum:</span>
+                        <div class="border-b-2 border-dotted border-brand-blue w-32"></div>
+                    </div>
+                </div>
+            </header>
+
+            {
+                success && (
+                    <div
+                        role="alert"
+                        class="bg-brand-blue text-white font-bold px-6 py-4 uppercase tracking-widest mb-6 border-4 border-brand-blue text-center"
+                    >
+                        Dokument byl úspěšně zaregistrován. Děkujeme.
+                    </div>
+                )
+            }
+
+            {
+                error && (
+                    <div
+                        role="alert"
+                        class="bg-white text-brand-blue px-6 py-4 mb-6 border-4 border-brand-blue"
+                    >
+                        <strong class="uppercase font-brand-blue block mb-1">Systémová chyba:</strong>
+                        <span class="font-mono text-sm">{error}</span>
+                    </div>
+                )
+            }
+
+            {
+                !success && (
+                    <form
+                        method="POST"
+                        class="border-t-4 border-l-4 border-brand-blue flex flex-col text-sm text-brand-blue"
+                    >
+                        <div class="border-r-4 border-b-4 border-brand-blue p-2 bg-brand-blue text-white">
+                            <span class="uppercase text-[12px] font-brand-blue tracking-widest">ODDÍL I. - OSOBNÍ ÚDAJE PACIENTA</span>
+                        </div>
+
+                        <!-- Row 1 -->
+                        <div class="grid grid-cols-1 md:grid-cols-2">
+                            <div class="border-r-4 border-b-4 border-brand-blue p-3 md:p-4 flex flex-col bg-white focus-within:bg-gray-100 transition-colors">
+                                <label for="name" class="uppercase text-[10px] font-brand-blue tracking-widest text-brand-blue mb-1">Jméno a příjmení pacienta *</label>
+                                <input type="text" id="name" name="name" required class="bg-transparent border-b-2 border-dotted border-gray-400 focus:outline-none focus:border-brand-blue font-bold text-lg md:text-xl py-1 w-full text-brand-blue" />
+                            </div>
+                            <div class="border-r-4 border-b-4 border-brand-blue p-3 md:p-4 flex flex-col bg-white focus-within:bg-gray-100 transition-colors">
+                                <label for="rc" class="uppercase text-[10px] font-brand-blue tracking-widest text-brand-blue mb-1">Rodné číslo</label>
+                                <input type="text" id="rc" name="Rodné číslo" class="bg-transparent border-b-2 border-dotted border-gray-400 focus:outline-none focus:border-brand-blue font-bold text-lg md:text-xl py-1 tracking-widest font-mono text-brand-blue w-full" placeholder="xxxxxx/xxxx" />
+                            </div>
+                        </div>
+
+                        <!-- Row 2 -->
+                        <div class="grid grid-cols-1 md:grid-cols-3">
+                            <div class="border-r-4 border-b-4 border-brand-blue p-3 md:p-4 flex flex-col bg-white focus-within:bg-gray-100 transition-colors md:col-span-2">
+                                <label for="address" class="uppercase text-[10px] font-brand-blue tracking-widest text-brand-blue mb-1">Adresa trvalého bydliště (vč. PSČ)</label>
+                                <input type="text" id="address" name="Adresa bydliště" class="bg-transparent border-b-2 border-dotted border-gray-400 focus:outline-none focus:border-brand-blue font-bold text-base md:text-lg py-1 w-full text-brand-blue" />
+                            </div>
+                            <div class="border-r-4 border-b-4 border-brand-blue p-3 md:p-4 flex flex-col bg-white focus-within:bg-gray-100 transition-colors">
+                                <label for="insurance" class="uppercase text-[10px] font-brand-blue tracking-widest text-brand-blue mb-1">Zdravotní pojišťovna</label>
+                                <input type="text" id="insurance" name="Zdravotní pojišťovna" class="bg-transparent border-b-2 border-dotted border-gray-400 focus:outline-none focus:border-brand-blue font-bold text-base md:text-lg py-1 font-mono text-brand-blue w-full" placeholder="např. 111" />
+                            </div>
+                        </div>
+
+                        <div class="border-r-4 border-b-4 border-brand-blue p-2 bg-brand-blue text-white mt-4 border-t-4">
+                            <span class="uppercase text-[12px] font-brand-blue tracking-widest">ODDÍL II. - KONTAKTNÍ ÚDAJE A ZÁSTUPCE</span>
+                        </div>
+
+                        <!-- Row 3 (Guardian & Contacts) -->
+                        <div class="grid grid-cols-1 md:grid-cols-2">
+                            <div class="border-r-4 border-b-4 border-brand-blue p-3 md:p-4 flex flex-col bg-white focus-within:bg-gray-100 transition-colors">
+                                <label for="guardian" class="uppercase text-[10px] font-brand-blue tracking-widest text-brand-blue mb-1">Jméno zákonného zástupce (u dětí)</label>
+                                <input type="text" id="guardian" name="Zákonný zástupce" class="bg-transparent border-b-2 border-dotted border-gray-400 focus:outline-none focus:border-brand-blue font-bold text-base md:text-lg py-1 text-brand-blue w-full" />
+                            </div>
+                            <div class="border-r-4 border-b-4 border-brand-blue p-3 md:p-4 flex flex-col bg-white focus-within:bg-gray-100 transition-colors">
+                                <label for="phone" class="uppercase text-[10px] font-brand-blue tracking-widest text-brand-blue mb-1">Telefonní spojení</label>
+                                <input type="tel" id="phone" name="Telefon" class="bg-transparent border-b-2 border-dotted border-gray-400 focus:outline-none focus:border-brand-blue font-bold text-base md:text-lg py-1 font-mono text-brand-blue w-full" />
+                            </div>
+                        </div>
+
+                        <!-- Row 4 -->
+                        <div class="grid grid-cols-1 md:grid-cols-2">
+                            <div class="border-r-4 border-b-4 border-brand-blue p-3 md:p-4 flex flex-col bg-white focus-within:bg-gray-100 transition-colors">
+                                <label for="email" class="uppercase text-[10px] font-brand-blue tracking-widest text-brand-blue mb-1">Kontaktní E-mail (hlavní komunikace) *</label>
+                                <input type="email" id="email" name="email" required class="bg-transparent border-b-2 border-dotted border-gray-400 focus:outline-none focus:border-brand-blue font-bold text-base md:text-lg py-1 text-brand-blue w-full" />
+                            </div>
+                            <div class="border-r-4 border-b-4 border-brand-blue p-3 md:p-4 flex flex-row items-center bg-gray-50 hover:bg-gray-100 cursor-pointer transition-colors" onclick="document.getElementById('consent').click()">
+                                <input type="checkbox" id="consent" name="Souhlas se zpracovanim" required class="w-6 h-6 border-4 border-brand-blue rounded-none checked:bg-brand-blue checked:border-brand-blue focus:ring-0 focus:ring-offset-0 focus:outline-none accent-brand-blue cursor-pointer align-middle shrink-0" />
+                                <label for="consent" class="uppercase text-[10px] md:text-[11px] font-brand-blue tracking-widest text-brand-blue font-sans leading-tight ml-4 cursor-pointer select-none">
+                                    Souhlasím se zpracováním osobních údajů pro účely objednání a vedení zdravotnické dokumentace *
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="border-r-4 border-b-4 border-brand-blue p-2 bg-brand-blue text-white mt-4 border-t-4">
+                            <span class="uppercase text-[12px] font-brand-blue tracking-widest">ODDÍL III. - ANAMNÉZA A DŮVOD VYŠETŘENÍ</span>
+                        </div>
+
+                        <!-- Row 5 -->
+                        <div class="grid grid-cols-1">
+                            <div class="border-r-4 border-b-4 border-brand-blue p-3 md:p-4 flex flex-col bg-white focus-within:bg-gray-100 transition-colors">
+                                <label for="reason" class="uppercase text-[10px] font-brand-blue tracking-widest text-brand-blue mb-1">Hlavní důvod žádosti o vyšetření / Obíže</label>
+                                <input type="text" id="reason" name="Důvod vyšetření" class="bg-transparent border-b-2 border-dotted border-gray-400 focus:outline-none focus:border-brand-blue font-bold text-base md:text-lg py-1 text-brand-blue w-full" />
+                            </div>
+                        </div>
+
+                        <!-- Row 6 -->
+                        <div class="grid grid-cols-1">
+                            <div class="border-r-4 border-b-4 border-brand-blue p-3 md:p-4 flex flex-col bg-white focus-within:bg-gray-100 transition-colors">
+                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-2">
+                                    <label for="history" class="uppercase text-[10px] font-brand-blue tracking-widest text-brand-blue">Základní lékařská a rodinná anamnéza</label>
+                                    <span class="text-[9px] font-bold text-gray-500 uppercase mt-1 sm:mt-0">(Přidružená onemocnění, komplikace u porodu, vývoj řeči)</span>
+                                </div>
+                                <textarea id="history" name="Anamnéza" rows="5" class="bg-transparent border-2 border-dashed border-gray-400 focus:outline-none focus:border-brand-blue font-bold p-3 mt-1 resize-y text-brand-blue w-full text-base"></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- Submit Section -->
+                        <div class="border-r-4 border-b-4 border-brand-blue p-6 md:p-8 bg-gray-50 flex flex-col items-center justify-center">
+                            <div class="mb-6 w-full max-w-sm flex justify-center">
+                                <Turnstile />
+                            </div>
+                            <button type="submit" class="border-4 border-brand-blue bg-white text-brand-blue font-brand-blue uppercase tracking-widest py-4 px-8 md:px-16 text-sm md:text-base hover:bg-brand-blue hover:text-white hover:cursor-pointer transition-colors w-full md:w-auto focus:outline-none focus:ring-4 focus:ring-brand-blue focus:ring-offset-2">
+                                Podepsat a odeslat dokument ke zpracování
+                            </button>
+                            <p class="text-[10px] font-brand-blue tracking-widest text-gray-500 uppercase mt-4 text-center">
+                                * Povinné rubriky ke striktnímu vyplnění
+                            </p>
+                        </div>
+                    </form>
+                )
+            }
+        </div>
+    </div>
+</Layout>

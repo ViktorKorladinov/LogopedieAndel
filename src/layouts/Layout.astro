@@ -7,6 +7,7 @@ const {
 	title = "Logopedie Anděl",
 	description = "Jsme specializovaná logopedická ambulance pro dospělé a děti. Nabízíme komplexní péči v Praze 5 na Andělu.",
 	image = "/assets/bg-img-default.jpg",
+	hideBackground = false,
 } = Astro.props;
 
 const canonicalURL = new URL(
@@ -63,21 +64,24 @@ const canonicalURL = new URL(
 
 		<meta name="generator" content={Astro.generator} />
 	</head>
-	<body class="">
+	<body class="flex flex-col min-h-screen">
 		<Header />
 		<main
 			id="main-content"
-			class="main relative w-full clear-both pt-[183px] md:pt-0"
+			class:list={[
+				"main flex-grow relative w-full clear-both",
+				!hideBackground && "pt-[183px] md:pt-0",
+			]}
 		>
-			<div
-				class="absolute top-0 left-0 w-full h-[500px] bg-[url('/assets/bg-main.png')] bg-repeat-x z-0"
-			>
-			</div>
+			{
+				!hideBackground && (
+					<>
+						<div class="absolute top-0 left-0 w-full h-[500px] bg-[url('/assets/bg-main.png')] bg-repeat-x z-0"></div>
 
-			<div
-				class="absolute top-0 left-0 w-full h-full z-10 bg-[url('/assets/bg-img-default-mobile.jpg')] md:bg-[url('/assets/bg-img-default.jpg')] lg:bg-[url('/assets/bg-img-default2.jpg')] bg-top md:bg-right-top lg:bg-top bg-no-repeat"
-			>
-			</div>
+						<div class="absolute top-0 left-0 w-full h-full z-10 bg-[url('/assets/bg-img-default-mobile.jpg')] md:bg-[url('/assets/bg-img-default.jpg')] lg:bg-[url('/assets/bg-img-default2.jpg')] bg-top md:bg-right-top lg:bg-top bg-no-repeat"></div>
+					</>
+				)
+			}
 
 			<div class="max-w-[980px] mx-auto relative z-20 clear-both">
 				<slot />
