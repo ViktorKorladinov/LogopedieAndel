@@ -87,7 +87,7 @@ async function sendPatientEmail(resendApiKey: string, formEmailTo: string, patie
     try {
         const resend = new Resend(resendApiKey);
         const response = await resend.emails.send({
-            from: "onboarding@resend.dev",
+            from: "Logopedie Anděl <onboarding@resend.dev>",
             to: [formEmailTo],
             subject: `Nový formulář pacienta: ${patientName}`,
             html: emailHtml,
