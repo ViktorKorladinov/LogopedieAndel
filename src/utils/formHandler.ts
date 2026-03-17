@@ -44,36 +44,10 @@ async function verifyTurnstileToken(token: string | undefined, secretKey: string
     }
 }
 
-interface PatientFormData {
-    name: string;
-    rc: string;
-    address: string;
-    insurance: string;
-    guardian: string;
-    phone: string;
-    email: string;
-    reason: string;
-    history: string;
-    consent: string;
-}
-
-function generateEmailHtml(formData: PatientFormData): string {
-    const fields = [
-        { label: 'Jméno a příjmení', value: formData.name },
-        { label: 'Rodné číslo', value: formData.rc },
-        { label: 'Adresa trvalého bydliště', value: formData.address },
-        { label: 'Zdravotní pojišťovna', value: formData.insurance },
-        { label: 'Zákonný zástupce', value: formData.guardian },
-        { label: 'Telefonní spojení', value: formData.phone },
-        { label: 'Kontaktní e-mail', value: formData.email },
-        { label: 'Hlavní důvod žádosti o vyšetření', value: formData.reason },
-        { label: 'Základní lékařská a rodinná anamnéza', value: formData.history },
-        { label: 'Souhlas se zpracováním osobních údajů', value: formData.consent }
-    ];
-
+function generateEmailHtml(fields: {label: string, value: string}[]): string {
     let emailHtml = "<h2>Nový formulář: Záznam o pacientovi</h2><table width='100%' border='1' cellpadding='8' cellspacing='0' style='border-collapse: collapse; font-family: sans-serif;'>";
     for (const field of fields) {
-        emailHtml += `<tr><td style='width:35%; background:#f3f4f6;'><strong>${field.label}</strong></td><td>${field.value || '-'}</td></tr>`;
+        emailHtml += `<tr><td style='width:35%; background:#f3f4f6;'><strong>${field.label}</strong></td><td style='white-space: pre-wrap;'>${field.value || '-'}</td></tr>`;
     }
     emailHtml += "</table>";
     return emailHtml;
@@ -111,22 +85,12 @@ export async function handlePatientForm(request: Request, locals: any) {
     try {
         const data = await request.formData();
 
-        const patientData: PatientFormData = {
-            name: data.get("name")?.toString() || "",
-            rc: data.get("Rodné číslo")?.toString() || "",
-            address: data.get("Adresa bydliště")?.toString() || "",
-            insurance: data.get("Zdravotní pojišťovna")?.toString() || "",
-            guardian: data.get("Zákonný zástupce")?.toString() || "",
-            phone: data.get("Telefon")?.toString() || "",
-            email: data.get("email")?.toString() || "",
-            reason: data.get("Důvod vyšetření")?.toString() || "",
-            history: data.get("Anamnéza")?.toString() || "",
-            consent: data.get("Souhlas se zpracovanim") ? "Ano" : "Ne",
-        };
+        const name = data.get("Jméno a příjmení")?.toString() || "";
+        const email = data.get("Kontaktní e-mail")?.toString() || "";
 
         const token = data.get("cf-turnstile-response")?.toString();
 
-        if (!patientData.name || !patientData.email) {
+        if (!name || !email) {
             return { success: false, error: "Jméno a e-mail jsou povinné." };
         }
 
@@ -138,11 +102,32 @@ export async function handlePatientForm(request: Request, locals: any) {
             return turnstileResult;
         }
 
+        // Dynamické sestavení všech polí formuláře pro e-mail
+        const emailFields: {label: string, value: string}[] = [];
+        const excludeKeys = new Set(["cf-turnstile-response"]);
+        const groupedData = new Map<string, string[]>();
+
+        for (const [key, value] of data.entries()) {
+            if (excludeKeys.has(key)) continue;
+            // U checkboxů, pokud nejsou zaškrtnuté, v datech vůbec nejsou, takže hodnota je vždy "on" nebo specifikovaná.
+            // Převedeme checkbox "on" na Ano.
+            const valStr = value.toString().trim() === 'on' ? 'Ano' : value.toString().trim();
+            
+            if (valStr) {
+                if (!groupedData.has(key)) groupedData.set(key, []);
+                groupedData.get(key)!.push(valStr);
+            }
+        }
+
+        for (const [key, values] of groupedData.entries()) {
+            emailFields.push({ label: key, value: values.join(", ") });
+        }
+
         // 2. Sestavení HTML emailu z formulářových dat
-        const emailHtml = generateEmailHtml(patientData);
+        const emailHtml = generateEmailHtml(emailFields);
 
         // 3. Odeslání emailu přes Resend
-        const emailResult = await sendPatientEmail(config.resendApiKey, config.formEmailTo, patientData.name, emailHtml);
+        const emailResult = await sendPatientEmail(config.resendApiKey, config.formEmailTo, name, emailHtml);
         if (!emailResult.success) {
             return emailResult;
         }

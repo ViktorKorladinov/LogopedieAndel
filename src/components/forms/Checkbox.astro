@@ -1,0 +1,13 @@
+---
+interface Props {
+	name: string;
+	label: string;
+	className?: string;
+}
+
+const { name, label, className = "" } = Astro.props;
+---
+<label class={`inline-flex items-center gap-2 cursor-pointer ${className}`}>
+    <input type="checkbox" name={name} class="w-4 h-4 rounded-sm text-brand-blue border-slate-300 focus:ring-brand-blue" /> 
+    <span class="text-sm font-medium text-slate-700">{label}</span>
+</label>
