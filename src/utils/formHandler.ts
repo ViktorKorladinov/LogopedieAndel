@@ -44,7 +44,7 @@ async function verifyTurnstileToken(token: string | undefined, secretKey: string
     }
 }
 
-function generateEmailHtml(fields: {label: string, value: string}[]): string {
+function generateEmailHtml(fields: { label: string, value: string }[]): string {
     let emailHtml = "<h2>Nový formulář: Záznam o pacientovi</h2><table width='100%' border='1' cellpadding='8' cellspacing='0' style='border-collapse: collapse; font-family: sans-serif;'>";
     for (const field of fields) {
         emailHtml += `<tr><td style='width:35%; background:#f3f4f6;'><strong>${field.label}</strong></td><td style='white-space: pre-wrap;'>${field.value || '-'}</td></tr>`;
@@ -103,7 +103,7 @@ export async function handlePatientForm(request: Request, locals: any) {
         }
 
         // Dynamické sestavení všech polí formuláře pro e-mail
-        const emailFields: {label: string, value: string}[] = [];
+        const emailFields: { label: string, value: string }[] = [];
         const excludeKeys = new Set(["cf-turnstile-response"]);
         const groupedData = new Map<string, string[]>();
 
@@ -112,7 +112,7 @@ export async function handlePatientForm(request: Request, locals: any) {
             // U checkboxů, pokud nejsou zaškrtnuté, v datech vůbec nejsou, takže hodnota je vždy "on" nebo specifikovaná.
             // Převedeme checkbox "on" na Ano.
             const valStr = value.toString().trim() === 'on' ? 'Ano' : value.toString().trim();
-            
+
             if (valStr) {
                 if (!groupedData.has(key)) groupedData.set(key, []);
                 groupedData.get(key)!.push(valStr);

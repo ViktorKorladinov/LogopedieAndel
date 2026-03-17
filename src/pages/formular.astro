@@ -1,3 +1,7 @@
+HTML Formatter & Beautifier
+
+Clean, indent, and organize your HTML code instantly.
+
 ---
 import Layout from "../layouts/Layout.astro";
 import Turnstile from "../components/Turnstile.astro";
@@ -16,406 +20,490 @@ let success = false;
 let error = "";
 
 if (Astro.request.method === "POST") {
-    const result = await handlePatientForm(Astro.request, Astro.locals);
-    success = result.success;
-    error = result.error || "";
+const result = await handlePatientForm(Astro.request, Astro.locals);
+success = result.success;
+error = result.error || "";
 }
 ---
 
 <Layout title="Dokumentace pacienta | Logopedie Anděl" hideBackground={true}>
-    <div class="min-h-screen bg-stone-100 py-12 px-4 font-sans">
-        <div class="max-w-5xl mx-auto">
+  <div class="min-h-screen bg-stone-100 py-12 px-4 font-sans">
+    <div class="max-w-5xl mx-auto">
 
-            <!-- Card -->
-            <div class="bg-white shadow-sm rounded-sm overflow-hidden">
+      <!-- Card -->
+      <div class="bg-white shadow-sm rounded-sm overflow-hidden">
 
-                <!-- Header -->
-                <div class="bg-brand-blue px-10 py-10 relative overflow-hidden">
-                    <div class="absolute -bottom-16 -right-16 w-56 h-56 rounded-full bg-white opacity-[0.04]"></div>
-                    <p class="text-[#7a9cc4] text-xs font-semibold tracking-[0.2em] uppercase mb-3">
-                        Logopedie Anděl &mdash; vzor LA-2026/A
-                    </p>
-                    <h1 class="text-white text-5xl sm:text-6xl font-light leading-tight mb-2" style="font-family: Georgia, serif;">
-                        Záznam <em>o pacientovi</em>
-                    </h1>
-                    <p class="text-[#7a9cc4] text-sm font-light tracking-wide">
-                        Vstupní logopedické vyšetření a anamnéza
-                    </p>
+        <!-- Header -->
+        <div class="bg-brand-blue px-10 py-10 relative overflow-hidden">
+          <div class="absolute -bottom-16 -right-16 w-56 h-56 rounded-full bg-white opacity-[0.04]"></div>
+          <p class="text-[#7a9cc4] text-xs font-semibold tracking-[0.2em] uppercase mb-3">
+            Logopedie Anděl &mdash; vzor LA-2026/A
+          </p>
+          <h1 class="text-white text-5xl sm:text-6xl font-light leading-tight mb-2" style="font-family: Georgia, serif;">
+            Záznam <em>o pacientovi</em>
+          </h1>
+          <p class="text-[#7a9cc4] text-sm font-light tracking-wide">
+            Vstupní logopedické vyšetření a anamnéza
+          </p>
+        </div>
+
+        {success && (
+        <div role="alert" class="mx-8 mt-6 mb-8 border-l-4 border-emerald-600 bg-emerald-50 px-6 py-5 text-emerald-800 text-base font-medium rounded-sm">
+          Dokument byl úspěšně zaregistrován. Děkujeme.
+        </div>
+        )}
+
+        {error && (
+        <div role="alert" class="mx-8 mt-6 border-l-4 border-red-600 bg-red-50 px-6 py-5 rounded-sm">
+          <strong class="block text-xs font-semibold tracking-[0.12em] uppercase text-red-700 mb-1">Systémová chyba</strong>
+          <span class="text-red-800 text-base">{error}</span>
+        </div>
+        )}
+
+        {!success && (
+        <form method="POST">
+
+          <!-- Section I -->
+          <SectionHeader number="I" title="Osobní údaje pacienta" />
+          <div class="px-10 py-7 grid gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-12 gap-6">
+              <TextInput name="Jméno a příjmení" label="Jméno a příjmení" required placeholder="Celé jméno" className="sm:col-span-12 lg:col-span-6" />
+              <TextInput name="Datum narození" label="Datum narození" type="date" className="sm:col-span-4 lg:col-span-3" />
+              <TextInput name="Rodné číslo" label="Rodné číslo" placeholder="xxxxxx/xxxx" className="sm:col-span-4 lg:col-span-3" />
+              <TextInput name="Zdravotní pojišťovna" label="Zdravotní pojišťovna" placeholder="např. 111" className="sm:col-span-4 lg:col-span-3" />
+              <TextInput name="Adresa bydliště" label="Adresa trvalého bydliště" placeholder="Ulice a město" className="sm:col-span-9 lg:col-span-7" />
+              <TextInput name="PSČ" label="PSČ" placeholder="150 00" className="sm:col-span-3 lg:col-span-2" />
+            </div>
+          </div>
+
+          <!-- Section II -->
+          <SectionHeader number="II" title="Školní zařazení" />
+          <div class="px-10 py-7 grid gap-2">
+
+            <!-- Nenavštěvuje / Netýká se -->
+            <div class="border-b border-slate-100 pb-6 mb-2 flex items-center">
+              <input type="radio" id="nav-none" value="Nenavštěvuje / Netýká se" name="Typ školy" class="w-5 h-5 border-slate-300 accent-brand-blue cursor-pointer mr-3" checked />
+              <label for="nav-none" class="text-sm font-bold text-brand-blue cursor-pointer select-none">Nenavštěvuje žádné zařízení / Netýká se</label>
+            </div>
+
+            <!-- MŠ -->
+            <div class="border-b border-slate-100 pb-8 flex flex-wrap items-center">
+              <input type="radio" id="nav-ms" value="MŠ" name="Typ školy" class="peer w-5 h-5 border-slate-300 accent-brand-blue cursor-pointer mr-3" />
+              <label for="nav-ms" class="text-sm font-bold text-brand-blue cursor-pointer select-none">Mateřská škola (MŠ)</label>
+
+              <div class="w-full mt-4 grid grid-cols-1 sm:grid-cols-3 gap-6 opacity-40 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto transition-opacity duration-200">
+                <TextInput name="Jméno MŠ" label="Název MŠ" placeholder="Např. MŠ Sluníčko" />
+                <TextInput name="MŠ - od let" label="Od kolika let" type="number" />
+                <RadioGroup name="MŠ docházka" label="Docházka" options={[{label: "Polodenně" , value: "Polodenně" }, {label: "Celodenně" , value: "Celodenně" }]} />
+              </div>
+            </div>
+
+            <!-- ZŠ -->
+            <div class="pt-4 flex flex-wrap items-center">
+              <input type="radio" id="nav-zs" value="ZŠ" name="Typ školy" class="peer w-5 h-5 border-slate-300 accent-brand-blue cursor-pointer mr-3" />
+              <label for="nav-zs" class="text-sm font-bold text-brand-blue cursor-pointer select-none">Základní škola (ZŠ)</label>
+
+              <div class="w-full mt-4 grid grid-cols-1 sm:grid-cols-3 gap-6 opacity-40 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto transition-opacity duration-200">
+                <TextInput name="Jméno ZŠ" label="Název ZŠ" placeholder="Např. ZŠ Komenského" />
+                <TextInput name="ZŠ ročník" label="Ročník" placeholder="Např. 3. třída" />
+                <TextInput name="ZŠ prospěch" label="Prospěch" placeholder="Např. 1, 2" />
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Section III -->
+          <SectionHeader number="III" title="Rodinná anamnéza (RA)" />
+          <div class="px-10 py-7 grid gap-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div>
+                <h3 class="text-sm font-bold text-brand-blue mb-4">Matka</h3>
+                <div class="grid grid-cols-2 gap-4">
+                  <TextInput name="Matka - Jméno" label="Jméno a příjmení" className="col-span-2" placeholder="Celé jméno" />
+                  <TextInput name="Matka - Rok nar." label="Rok nar." placeholder="např. 1985" className="col-span-2 sm:col-span-1" />
+                  <TextInput name="Matka - Vzdělání" label="Vzdělání" className="col-span-2 sm:col-span-1" />
+                  <TextInput name="Matka - Zaměstnání" label="Zaměstnání" className="col-span-2" />
+                  <RadioGroup name="Matka - lateralita" label="Lateralita" options={[{label: "Pravák" , value: "Pravák" }, {label: "Levák" , value: "Levák" }]} className="col-span-2" />
+                </div>
+              </div>
+              <div>
+                <h3 class="text-sm font-bold text-brand-blue mb-4">Otec</h3>
+                <div class="grid grid-cols-2 gap-4">
+                  <TextInput name="Otec - Jméno" label="Jméno a příjmení" className="col-span-2" placeholder="Celé jméno" />
+                  <TextInput name="Otec - Rok nar." label="Rok nar." placeholder="např. 1980" className="col-span-2 sm:col-span-1" />
+                  <TextInput name="Otec - Vzdělání" label="Vzdělání" className="col-span-2 sm:col-span-1" />
+                  <TextInput name="Otec - Zaměstnání" label="Zaměstnání" className="col-span-2" />
+                  <RadioGroup name="Otec - lateralita" label="Lateralita" options={[{label: "Pravák" , value: "Pravák" }, {label: "Levák" , value: "Levák" }]} className="col-span-2" />
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6 border-t border-slate-100">
+              <div id="siblings-container" class="flex flex-col gap-3 sm:col-span-2">
+                <label class="text-xs font-semibold tracking-[0.14em] uppercase text-slate-500">Sourozenci</label>
+
+                <div id="siblings-list" class="flex flex-col gap-3">
+                  <!-- Siblings injected here -->
                 </div>
 
-                {success && (
-                    <div role="alert" class="mx-8 mt-6 mb-8 border-l-4 border-emerald-600 bg-emerald-50 px-6 py-5 text-emerald-800 text-base font-medium rounded-sm">
-                        Dokument byl úspěšně zaregistrován. Děkujeme.
-                    </div>
-                )}
-
-                {error && (
-                    <div role="alert" class="mx-8 mt-6 border-l-4 border-red-600 bg-red-50 px-6 py-5 rounded-sm">
-                        <strong class="block text-xs font-semibold tracking-[0.12em] uppercase text-red-700 mb-1">Systémová chyba</strong>
-                        <span class="text-red-800 text-base">{error}</span>
-                    </div>
-                )}
-
-                {!success && (
-                    <form method="POST">
-
-                        <!-- Section I -->
-                        <SectionHeader number="I" title="Osobní údaje pacienta" />
-                        <div class="px-10 py-7 grid gap-6">
-                            <div class="grid grid-cols-1 sm:grid-cols-12 gap-6">
-                                <TextInput name="Jméno a příjmení" label="Jméno a příjmení" required placeholder="Celé jméno" className="sm:col-span-12 lg:col-span-6" />
-                                <TextInput name="Datum narození" label="Datum narození" type="date" className="sm:col-span-4 lg:col-span-3" />
-                                <TextInput name="Rodné číslo" label="Rodné číslo" placeholder="xxxxxx/xxxx" className="sm:col-span-4 lg:col-span-3" />
-                                <TextInput name="Zdravotní pojišťovna" label="Zdravotní pojišťovna" placeholder="např. 111" className="sm:col-span-4 lg:col-span-3" />
-                                <TextInput name="Adresa bydliště" label="Adresa trvalého bydliště" placeholder="Ulice a město" className="sm:col-span-9 lg:col-span-7" />
-                                <TextInput name="PSČ" label="PSČ" placeholder="150 00" className="sm:col-span-3 lg:col-span-2" />
-                            </div>
-                        </div>
-
-                        <!-- Section II -->
-                        <SectionHeader number="II" title="Školní zařazení" />
-                        <div class="px-10 py-7 grid gap-2">
-                            
-                            <!-- Nenavštěvuje / Netýká se -->
-                            <div class="border-b border-slate-100 pb-6 mb-2 flex items-center">
-                                <input type="radio" id="nav-none" value="Nenavštěvuje / Netýká se" name="Typ školy" class="w-5 h-5 border-slate-300 accent-brand-blue cursor-pointer mr-3" checked />
-                                <label for="nav-none" class="text-sm font-bold text-brand-blue cursor-pointer select-none">Nenavštěvuje žádné zařízení / Netýká se</label>
-                            </div>
-
-                            <!-- MŠ -->
-                            <div class="border-b border-slate-100 pb-8 flex flex-wrap items-center">
-                                <input type="radio" id="nav-ms" value="MŠ" name="Typ školy" class="peer w-5 h-5 border-slate-300 accent-brand-blue cursor-pointer mr-3" />
-                                <label for="nav-ms" class="text-sm font-bold text-brand-blue cursor-pointer select-none">Mateřská škola (MŠ)</label>
-                                
-                                <div class="w-full mt-4 grid grid-cols-1 sm:grid-cols-3 gap-6 opacity-40 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto transition-opacity duration-200">
-                                    <TextInput name="Jméno MŠ" label="Název MŠ" placeholder="Např. MŠ Sluníčko" />
-                                    <TextInput name="MŠ - od let" label="Od kolika let" type="number" />
-                                    <RadioGroup name="MŠ docházka" label="Docházka" options={[{label: "Polodenně", value: "Polodenně"}, {label: "Celodenně", value: "Celodenně"}]} />
-                                </div>
-                            </div>
-
-                            <!-- ZŠ -->
-                            <div class="pt-4 flex flex-wrap items-center">
-                                <input type="radio" id="nav-zs" value="ZŠ" name="Typ školy" class="peer w-5 h-5 border-slate-300 accent-brand-blue cursor-pointer mr-3" />
-                                <label for="nav-zs" class="text-sm font-bold text-brand-blue cursor-pointer select-none">Základní škola (ZŠ)</label>
-                                
-                                <div class="w-full mt-4 grid grid-cols-1 sm:grid-cols-3 gap-6 opacity-40 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto transition-opacity duration-200">
-                                    <TextInput name="Jméno ZŠ" label="Název ZŠ" placeholder="Např. ZŠ Komenského" />
-                                    <TextInput name="ZŠ ročník" label="Ročník" placeholder="Např. 3. třída" />
-                                    <TextInput name="ZŠ prospěch" label="Prospěch" placeholder="Např. 1, 2" />
-                                </div>
-                            </div>
-                            
-                        </div>
-
-                        <!-- Section III -->
-                        <SectionHeader number="III" title="Rodinná anamnéza (RA)" />
-                        <div class="px-10 py-7 grid gap-8">
-                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                                <div>
-                                    <h3 class="text-sm font-bold text-brand-blue mb-4">Matka</h3>
-                                    <div class="grid grid-cols-2 gap-4">
-                                        <TextInput name="Matka - Jméno" label="Jméno a příjmení" className="col-span-2" placeholder="Celé jméno" />
-                                        <TextInput name="Matka - Rok nar." label="Rok nar." placeholder="např. 1985" className="col-span-2 sm:col-span-1" />
-                                        <TextInput name="Matka - Vzdělání" label="Vzdělání" className="col-span-2 sm:col-span-1" />
-                                        <TextInput name="Matka - Zaměstnání" label="Zaměstnání" className="col-span-2" />
-                                        <RadioGroup name="Matka - lateralita" label="Lateralita" options={[{label: "Pravák", value: "Pravák"}, {label: "Levák", value: "Levák"}]} className="col-span-2" />
-                                    </div>
-                                </div>
-                                <div>
-                                    <h3 class="text-sm font-bold text-brand-blue mb-4">Otec</h3>
-                                    <div class="grid grid-cols-2 gap-4">
-                                        <TextInput name="Otec - Jméno" label="Jméno a příjmení" className="col-span-2" placeholder="Celé jméno" />
-                                        <TextInput name="Otec - Rok nar." label="Rok nar." placeholder="např. 1980" className="col-span-2 sm:col-span-1" />
-                                        <TextInput name="Otec - Vzdělání" label="Vzdělání" className="col-span-2 sm:col-span-1" />
-                                        <TextInput name="Otec - Zaměstnání" label="Zaměstnání" className="col-span-2" />
-                                        <RadioGroup name="Otec - lateralita" label="Lateralita" options={[{label: "Pravák", value: "Pravák"}, {label: "Levák", value: "Levák"}]} className="col-span-2" />
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6 border-t border-slate-100">
-                                <div id="siblings-container" class="flex flex-col gap-3 col-span-2">
-                                    <label class="text-xs font-semibold tracking-[0.14em] uppercase text-slate-500">Sourozenci</label>
-                                    
-                                    <div id="siblings-list" class="flex flex-col gap-3">
-                                        <!-- Siblings injected here -->
-                                    </div>
-                                    
-                                    <button type="button" id="add-sibling-btn" class="self-start text-brand-blue text-sm font-bold flex items-center gap-2 hover:bg-slate-50 px-3 py-2 rounded-sm border-2 border-transparent hover:border-slate-200 transition-all">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-                                        Přidat sourozence
-                                    </button>
-                                </div>
-                                <div class="col-span-2">
-                                    <RadioGroup name="Rodina stav" label="Rodina stav" options={[
-                                        {label: "Úplná", value: "Úplná"}, 
-                                        {label: "Neúplná", value: "Neúplná"}, 
-                                        {label: "Rozvod", value: "Rozvod"}, 
-                                        {label: "Úmrtí", value: "Úmrtí"}
-                                    ]} />
-                                </div>
-                                <TextArea name="Rodina - Nemoci a operace" label="Nemoci a operace" className="col-span-2 sm:col-span-1" />
-                                <TextArea name="Rodina - Řečové a sluchové vady" label="Řečové a sluchové vady" className="col-span-2 sm:col-span-1" />
-                            </div>
-                        </div>
-
-                        <!-- Section IV -->
-                        <SectionHeader number="IV" title="Osobní anamnéza (OA)" />
-                        <div class="px-10 py-7 grid gap-8">
-                            <!-- Těhotenství -->
-                            <div class="border-b border-slate-100 pb-6">
-                                <h3 class="text-sm font-bold text-brand-blue mb-5">Těhotenství</h3>
-                                <div class="grid grid-cols-1 sm:grid-cols-4 gap-6">
-                                    <TextInput name="Těhotenství kolikáté" label="Kolikáté" type="number" />
-                                    <TextInput name="Věk matky při porodu" label="Věk matky" type="number" />
-                                    <div class="sm:col-span-2 flex h-full flex-col gap-4">
-                                        <RadioGroup name="Rizikové těhotenství" label="Rizikové těhotenství" options={[{label: "Ne", value: "Ne"}, {label: "Ano", value: "Ano"}]} />
-                                    </div>
-                                    <div id="rizika-container" class="hidden sm:col-span-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-2">
-                                        <Checkbox name="Rizika z těhotenství nepod. onemocnění" label="Gyn. onemocnění" />
-                                        <Checkbox name="Rizika z těhotenství léky" label="Léky" />
-                                        <Checkbox name="Rizika z těhotenství infekce" label="Infekce" />
-                                        <Checkbox name="Rizika z těhotenství horečnaté onem." label="Horečnatá onem." />
-                                        <Checkbox name="Rizika z těhotenství diabetes" label="Diabetes" />
-                                        <Checkbox name="Rizika z těhotenství toxikománie" label="Toxikománie" />
-                                        <Checkbox name="Rizika z těhotenství krvácení" label="Krvácení (1., 2., 3. trimestr)" className="sm:col-span-2" />
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Porod -->
-                            <div class="border-b border-slate-100 pb-6">
-                                <h3 class="text-sm font-bold text-brand-blue mb-5">Porod</h3>
-                                <div class="grid grid-cols-1 sm:grid-cols-4 gap-6">
-                                    <TextInput name="Porod kolikátý" label="Kolikátý" type="number" />
-                                    <div class="sm:col-span-3 flex h-full flex-col gap-4">
-                                        <RadioGroup name="Komplikace u porodu" label="Komplikace u porodu"  options={[{label: "Ne", value: "bez komplikací"}, {label: "Ano", value: "s komplikacemi"}]} />
-                                    </div>
-                                    <div id="komplikace-porod-container" class="hidden sm:col-span-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-2">
-                                        <Checkbox name="Porod komplikace Císařský řez" label="Císařský řez" />
-                                        <Checkbox name="Porod v termínu" label="V termínu" />
-                                        <Checkbox name="Porod předčasný" label="Předčasný" />
-                                        <Checkbox name="Porod po termínu" label="Po termínu" />
-                                        <Checkbox name="Porod evokovaný" label="Evokovaný" />
-                                        <Checkbox name="Porod překotný" label="Překotný" />
-                                        <Checkbox name="Porod protrahovaný" label="Protrahovaný" />
-                                        <Checkbox name="Porod koncem pánevním" label="Koncem pánevním" />
-                                        <Checkbox name="Porod klešťový" label="Klešťový" />
-                                        <Checkbox name="Porod vakuumextrace" label="Vakuumextrace" />
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Novorozenec -->
-                            <div>
-                                <h3 class="text-sm font-bold text-brand-blue mb-5">Novorozenec a raný vývoj</h3>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                    <div class="flex gap-4">
-                                        <TextInput name="Novorozenec - váha g" label="Váha (g)" type="number" className="flex-1" />
-                                        <TextInput name="Novorozenec - míra cm" label="Míra (cm)" type="number" className="flex-1" />
-                                    </div>
-                                    <div class="flex flex-row justify-center gap-3">
-                                        <Checkbox name="Novorozenec - inkubátor" label="Inkubátor" />
-                                        <Checkbox name="Novorozenec - resuscitace" label="Resuscitace" />
-                                        <Checkbox name="Novorozenec - fototerapie" label="Fototerapie" />
-                                    </div>
-                                    
-                                    <div class="col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-6">
-                                        <TextInput name="Novorozenec - kojen" label="Kojen (ne / ano a jak dlouho)" placeholder="např. Ano, 6 měs." />
-                                        <TextInput name="Novorozenec - plenován noc do" label="Plenován - noc do (věk)" />
-                                        <TextInput name="Novorozenec - plenován den do" label="Plenován - den do (věk)" />
-                                    </div>
-                                    
-                                    <div class="col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                        <TextInput name="Novorozenec - Enuresa nocturna" label="Enuresa nocturna do věku (trvá?)" placeholder="Do kolika let, nebo trvá?" />
-                                        <TextInput name="Novorozenec - Problémy s potravou" label="Problémy s přijímáním potravy" placeholder="kousání, polykání, salivace..." />
-                                    </div>
-                                    
-                                    <TextArea name="Prodělané nemoci" label="Prodělané nemoci, hospitalizace" className="col-span-2" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Section V -->
-                        <SectionHeader number="V" title="Vývoj motoriky a řeči" />
-                        <div class="px-10 py-7 grid gap-6">
-                            <div class="grid grid-cols-1 sm:grid-cols-4 gap-6">
-                                <TextInput name="Vývoj sed" label="Sed (měsíc věku)" />
-                                <TextInput name="Vývoj chůze" label="Chůze (měsíc věku)" />
-                                <TextInput name="1. slova" label="1. smysluplná slova" />
-                                <TextInput name="1. věty" label="1. věty" />
-                            </div>
-                        </div>
-
-                        <!-- Section VI -->
-                        <SectionHeader number="VI" title="Vyšetření a dosavadní péče" />
-                        <div class="px-10 py-7 grid gap-6">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                <RadioGroup name="Sluch. vyš." label="Orient. sluchové vyš." options={[{label: "Bez nálezu", value: "Bez nálezu"}, {label: "Nedoslýchá", value: "Nedoslýchá"}, {label: "Sluch. vada", value: "Sluchová vada"}]} />
-                                <RadioGroup name="Oční vyš." label="Oční vyš." options={[{label: "Bez nálezu", value: "Bez nálezu"}, {label: "Brýle", value: "Brýle"}]} />
-                                
-                                <RadioGroup name="Krční mandle" label="Krční mandle" options={[{label: "Neodstraněny", value: "Neodstraněny"}, {label: "Odstraněny", value: "Odstraněny"}]} />
-                                <TextInput name="Nosní mandle" label="Nosní mandle (neodstraněny / odstraněny kdy)" placeholder="např. Neodstraněny" />
-                                
-                                <div class="flex flex-col gap-3 col-span-2 sm:col-span-1">
-                                    <span class="text-xs font-semibold tracking-[0.14em] uppercase text-slate-500">Discize frenula (uzdička pod jazykem)</span>
-                                    <div class="flex items-center gap-4 flex-wrap">
-                                        <RadioGroup name="Discize frenula" options={[{label: "Ne", value: "Ne"}, {label: "Ano (kdy?)", value: "Ano"}]} />
-                                        <TextInput name="Discize frenula kdy" className="flex-1 min-w-[120px]" />
-                                    </div>
-                                </div>
-                                
-                                <Select name="Dítě lateralita" label="Lateralita (dominantní ruka dítěte)" options={[
-                                    {label: "Nevyhraněná", value: "Nevyhraněná"},
-                                    {label: "Pravák", value: "Vyhraněná - Pravák"},
-                                    {label: "Levák", value: "Vyhraněná - Levák"},
-                                    {label: "Ambidextrie", value: "Ambidextrie"}
-                                ]} className="col-span-2 sm:col-span-1" />
-                                
-                                <div class="col-span-2 flex flex-col gap-3">
-                                    <span class="text-xs font-semibold tracking-[0.14em] uppercase text-slate-500">Dosavadní péče (Zprávy u sebe / Kde a jak dlouho)</span>
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                        <TextInput name="Péče foniatr" placeholder="Foniatr (zpráva ano/ne)" />
-                                        <TextInput name="Péče psycholog" placeholder="Psycholog (zpráva ano/ne)" />
-                                        <TextInput name="Péče logoped" placeholder="Logoped (kde, jak dlouho)" />
-                                        <div class="flex items-center gap-4 mt-2">
-                                            <Checkbox name="Asistentka v MŠ" label="Asistentka v MŠ" />
-                                            <Checkbox name="Péče v SPC" label="SPC" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Section VII -->
-                        <SectionHeader number="VII" title="Kontakty a zákonný zástupce" />
-                        <div class="px-10 py-7 grid gap-6">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                <TextInput name="Zákonný zástupce" label="Zákonný zástupce" placeholder="Jméno a příjmení (u dětí)" />
-                                <TextInput name="Telefon" label="Telefonní spojení" type="tel" placeholder="+420 000 000 000" />
-                                <TextInput name="Kontaktní e-mail" label="Kontaktní e-mail" type="email" required placeholder="priklad@email.cz" />
-                                
-                                <div class="flex flex-col justify-end">
-                                    <label class="flex items-start gap-3 bg-white border-2 border-slate-300 rounded-sm p-3 cursor-pointer hover:bg-slate-50 transition-all">
-                                        <input type="checkbox" name="Souhlas se zpracovanim" required class="mt-1 w-5 h-5 rounded-sm border-slate-300 accent-brand-blue cursor-pointer" />
-                                        <span class="text-xs text-slate-600 leading-relaxed">Souhlasím se zpracováním osobních údajů pro účely vedení zdrav. dokumentace <span class="text-red-500">*</span></span>
-                                    </label>
-                                </div>
-                                <TextArea name="Důvod vyšetření" label="Hlavní důvod žádosti o vyšetření" placeholder="Stručně popište obtíže..." className="sm:col-span-2" />
-                            </div>
-                        </div>
-
-                        <!-- Submit -->
-                        <div class="border-t border-stone-100 bg-stone-50 px-10 py-8 flex flex-col items-center gap-5">
-                            <div class="flex justify-center">
-                                <Turnstile />
-                            </div>
-                            <button
-                                type="submit"
-                                class="w-full max-w-md bg-stone-200 hover:bg-brand-blue border-2 border-stone-300 hover:border-brand-blue text-brand-blue hover:text-white cursor-pointer text-sm font-semibold tracking-[0.14em] uppercase py-4 px-8 rounded-sm transition-all hover:shadow-lg hover:-translate-y-px active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2"
-                            >
-                                Odeslat dokument ke zpracování
-                            </button>
-                            <p class="text-xs font-medium tracking-[0.1em] uppercase text-stone-400">
-                                * Povinné položky
-                            </p>
-                        </div>
-
-                    </form>
-                )}
-
+                <button type="button" id="add-sibling-btn" class="self-start text-brand-blue text-sm font-bold flex items-center gap-2 hover:bg-slate-50 px-3 py-2 rounded-sm border-2 border-transparent hover:border-slate-200 transition-all">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12h14" />
+                  </svg>
+                  Přidat sourozence
+                </button>
+              </div>
+              <div class="sm:col-span-2">
+                <RadioGroup name="Rodina stav" label="Rodina stav" options={[ {label: "Úplná" , value: "Úplná" }, {label: "Neúplná" , value: "Neúplná" }, {label: "Rozvod" , value: "Rozvod" }, {label: "Úmrtí" , value: "Úmrtí" } ]} />
+              </div>
+              <TextArea name="Rodina - Nemoci a operace" label="Nemoci a operace" className="sm:col-span-1" />
+              <TextArea name="Rodina - Řečové a sluchové vady" label="Řečové a sluchové vady" className="sm:col-span-1" />
             </div>
-        </div>
+          </div>
+
+          <!-- Section IV -->
+          <SectionHeader number="IV" title="Osobní anamnéza (OA)" />
+          <div class="px-10 py-7 grid gap-8">
+            <!-- Těhotenství -->
+            <div class="border-b border-slate-100 pb-6">
+              <h3 class="text-sm font-bold text-brand-blue mb-5">Těhotenství</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-4 gap-6">
+                <TextInput name="Těhotenství kolikáté" label="Kolikáté" type="number" placeholder="např. 1" />
+                <TextInput name="Věk matky při porodu" label="Věk matky" type="number" placeholder="např. 28" />
+                <div class="sm:col-span-2 flex h-full flex-col gap-4">
+                  <RadioGroup name="Rizikové těhotenství" label="Rizikové těhotenství" options={[{label: "Ne" , value: "Ne" }, {label: "Ano" , value: "Ano" }]} />
+                </div>
+                <div id="rizika-container" class="hidden sm:col-span-4 mt-2">
+                  <Checkbox name="Rizika z těhotenství" options={[ { label: "Gyn. onemocnění" , value: "Gyn. onemocnění" }, { label: "Léky" , value: "Léky" }, { label: "Infekce" , value: "Infekce" }, { label: "Horečnatá onem." , value: "Horečnatá onem." }, { label: "Diabetes" , value: "Diabetes" }, { label: "Toxikománie" , value: "Toxikománie" }, { label: "Krvácení (1., 2., 3. trimestr)" , value: "Krvácení (1., 2., 3. trimestr)" } ]} layout="grid-4" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Porod -->
+            <div class="border-b border-slate-100 pb-6">
+              <h3 class="text-sm font-bold text-brand-blue mb-5">Porod</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-4 gap-6">
+                <TextInput name="Porod kolikátý" label="Kolikátý" type="number" placeholder="např. 1" />
+                <div class="sm:col-span-3 flex h-full flex-col gap-4">
+                  <RadioGroup name="Komplikace u porodu" label="Komplikace u porodu" options={[{label: "Ne" , value: "bez komplikací" }, {label: "Ano" , value: "s komplikacemi" }]} />
+                </div>
+                <div id="komplikace-porod-container" class="hidden sm:col-span-4 mt-2">
+                  <Checkbox name="Porod komplikace typ" options={[ { label: "Císařský řez" , value: "Císařský řez" }, { label: "V termínu" , value: "V termínu" }, { label: "Předčasný" , value: "Předčasný" }, { label: "Po termínu" , value: "Po termínu" }, { label: "Evokovaný" , value: "Evokovaný" }, { label: "Překotný" , value: "Překotný" }, { label: "Protrahovaný" , value: "Protrahovaný" }, { label: "Koncem pánevním" , value: "Koncem pánevním" }, { label: "Klešťový" , value: "Klešťový" }, { label: "Vakuumextrace" , value: "Vakuumextrace" } ]} layout="grid-4" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Novorozenec -->
+            <div>
+              <h3 class="text-sm font-bold text-brand-blue mb-5">Novorozenec a raný vývoj</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="flex gap-4">
+                  <TextInput name="Novorozenec - váha g" label="Váha (g)" type="number" className="flex-1" placeholder="např. 3500" />
+                  <TextInput name="Novorozenec - míra cm" label="Míra (cm)" type="number" className="flex-1" placeholder="např. 50" />
+                </div>
+                <div class="sm:col-span-1 lg:col-span-2">
+                  <Checkbox name="Novorozenec péče" label="Novorozenec péče" options={[ { label: "Inkubátor" , value: "Inkubátor" }, { label: "Resuscitace" , value: "Resuscitace" }, { label: "Fototerapie" , value: "Fototerapie" } ]} layout="inline" />
+                </div>
+
+                <div class="flex flex-col gap-3">
+                  <span class="text-xs font-semibold tracking-[0.14em] uppercase text-slate-500">Kojen</span>
+                  <div class="flex items-center gap-4 flex-wrap">
+                    <RadioGroup name="Novorozenec - kojen" options={[{label: "Ne" , value: "Ne" }, {label: "Ano" , value: "Ano" }]} />
+                    <div id="kojen-container" class="opacity-40 pointer-events-none transition-opacity duration-200 flex-1 min-w-[120px]">
+                      <TextInput name="Novorozenec - kojen jak dlouho" placeholder="Např. 6 měsíců" />
+                    </div>
+                  </div>
+                </div>
+                <TextInput name="Novorozenec - plenován noc do" label="Plenován - noc do (věk)" placeholder="např. do 2 let" />
+                <TextInput name="Novorozenec - plenován den do" label="Plenován - den do (věk)" placeholder="např. do 1,5 roku" />
+
+                <div class="flex flex-col gap-3">
+                  <span class="text-xs font-semibold tracking-[0.14em] uppercase text-slate-500">Enuresa nocturna (pomočování v noci)</span>
+                  <div class="flex items-center gap-4 flex-wrap">
+                    <RadioGroup name="Novorozenec - Enuresa nocturna" options={[{label: "Ne" , value: "Ne" }, {label: "Ano" , value: "Ano" }]} />
+                    <div id="enuresa-container" class="opacity-40 pointer-events-none transition-opacity duration-200 flex-1 min-w-[120px]">
+                      <TextInput name="Novorozenec - Enuresa nocturna do věku" placeholder="Do věku? (nebo trvá?)" />
+                    </div>
+                  </div>
+                </div>
+                <div class="flex flex-col gap-3 sm:col-span-2 lg:col-span-2">
+                  <span class="text-xs font-semibold tracking-[0.14em] uppercase text-slate-500">Problémy s přijímáním potravy</span>
+                  <div class="flex items-center gap-4 flex-wrap">
+                    <RadioGroup name="Novorozenec - Problémy s potravou" options={[{label: "Ne" , value: "Ne" }, {label: "Ano" , value: "Ano" }]} />
+                    <div id="potrava-container" class="opacity-40 pointer-events-none transition-opacity duration-200 flex-1 min-w-[120px]">
+                      <TextInput name="Novorozenec - Problémy s potravou detaily" placeholder="kousání, polykání, salivace..." />
+                    </div>
+                  </div>
+                </div>
+
+                <TextArea name="Prodělané nemoci" label="Prodělané nemoci, hospitalizace" className="sm:col-span-2 lg:col-span-3" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Section V -->
+          <SectionHeader number="V" title="Vývoj motoriky a řeči" />
+          <div class="px-10 py-7 grid gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-6">
+              <TextInput name="Vývoj sed" label="Sed (měsíc věku)" placeholder="např. 6" />
+              <TextInput name="Vývoj chůze" label="Chůze (měsíc věku)" placeholder="např. 12" />
+              <TextInput name="1. slova" label="1. smysluplná slova" placeholder="např. máma, táta" />
+              <TextInput name="1. věty" label="1. věty" placeholder="např. Máma dej." />
+            </div>
+          </div>
+
+          <!-- Section VI -->
+          <SectionHeader number="VI" title="Vyšetření" />
+          <div class="px-10 py-7 grid gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <RadioGroup name="Sluch. vyš." label="Orient. sluchové vyš." options={[{label: "Bez nálezu" , value: "Bez nálezu" }, {label: "Nedoslýchá" , value: "Nedoslýchá" }, {label: "Sluch. vada" , value: "Sluchová vada" }]} />
+              <RadioGroup name="Oční vyš." label="Oční vyš." options={[{label: "Bez nálezu" , value: "Bez nálezu" }, {label: "Brýle" , value: "Brýle" }]} />
+
+              <RadioGroup name="Krční mandle" label="Krční mandle" options={[{label: "Neodstraněny" , value: "Neodstraněny" }, {label: "Odstraněny" , value: "Odstraněny" }]} />
+              <div class="flex flex-col gap-3">
+                <span class="text-xs font-semibold tracking-[0.14em] uppercase text-slate-500">Nosní mandle</span>
+                <div class="flex items-center gap-4 flex-wrap">
+                  <RadioGroup name="Nosní mandle stav" options={[{label: "Neodstraněny" , value: "Neodstraněny" }, {label: "Odstraněny" , value: "Odstraněny" }]} />
+                  <div id="nosni-mandle-container" class="opacity-40 pointer-events-none transition-opacity duration-200 flex-1 min-w-[120px]">
+                    <TextInput name="Nosní mandle odstraněny kdy" placeholder="Kdy? (např. ve 4 letech)" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex flex-col gap-3 sm:col-span-1">
+                <span class="text-xs font-semibold tracking-[0.14em] uppercase text-slate-500">Discize frenula (uzdička pod jazykem)</span>
+                <div class="flex items-center gap-4 flex-wrap">
+                  <RadioGroup name="Discize frenula" options={[{label: "Ne" , value: "Ne" }, {label: "Ano" , value: "Ano" }]} />
+                  <div id="discize-container" class="opacity-40 pointer-events-none transition-opacity duration-200 flex-1 min-w-[120px]">
+                    <TextInput name="Discize frenula kdy" placeholder="Kdy?" />
+                  </div>
+                </div>
+              </div>
+
+              <RadioGroup name="Dítě lateralita" label="Lateralita" options={[{label: "Pravák" , value: "Pravák" }, {label: "Levák" , value: "Levák" }]} className="col-span-1" />
+            </div>
+          </div>
+
+          <SectionHeader number="VII" title="Dosavadní péče" />
+          <div class="px-10 py-7 grid gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div class="sm:col-span-2 flex flex-col gap-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                  <div class="flex flex-col gap-2">
+                    <span class="text-xs font-semibold tracking-[0.14em] uppercase text-slate-500">Foniatr</span>
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <RadioGroup name="Péče foniatr" options={[{label: "Ne" , value: "Ne" }, {label: "Ano" , value: "Ano" }]} />
+                      <div id="foniatr-container" class="opacity-40 pointer-events-none transition-opacity duration-200 flex-1 min-w-[120px]">
+                        <TextInput name="Péče foniatr zpráva" placeholder="Má zprávu?" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-col gap-2">
+                    <span class="text-xs font-semibold tracking-[0.14em] uppercase text-slate-500">Psycholog</span>
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <RadioGroup name="Péče psycholog" options={[{label: "Ne" , value: "Ne" }, {label: "Ano" , value: "Ano" }]} />
+                      <div id="psycholog-container" class="opacity-40 pointer-events-none transition-opacity duration-200 flex-1 min-w-[120px]">
+                        <TextInput name="Péče psycholog zpráva" placeholder="Má zprávu?" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-col gap-2 sm:col-span-2">
+                    <span class="text-xs font-semibold tracking-[0.14em] uppercase text-slate-500">Logoped</span>
+                    <div class="flex items-center gap-3 flex-wrap">
+                      <RadioGroup name="Péče logoped" options={[{label: "Ne" , value: "Ne" }, {label: "Ano" , value: "Ano" }]} />
+                      <div id="logoped-container" class="opacity-40 pointer-events-none transition-opacity duration-200 flex-1 min-w-[120px]">
+                        <TextInput name="Péče logoped detaily" placeholder="Kde a jak dlouho?" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex items-center mt-2">
+                    <Checkbox name="Další péče" options={[ { label: "Asistentka v MŠ" , value: "Asistentka v MŠ" }, { label: "SPC" , value: "SPC" } ]} layout="inline" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section VII -->
+          <SectionHeader number="VII" title="Kontakty a zákonný zástupce" />
+          <div class="px-10 py-7 grid gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <TextInput name="Zákonný zástupce" label="Zákonný zástupce" placeholder="Jméno a příjmení (u dětí)" />
+              <TextInput name="Telefon" label="Telefonní spojení" type="tel" placeholder="+420 000 000 000" />
+              <TextInput name="Kontaktní e-mail" label="Kontaktní e-mail" type="email" required placeholder="priklad@email.cz" />
+
+              <div class="flex flex-col justify-end">
+                <label class="flex items-start gap-3 bg-white border-2 border-slate-300 rounded-sm p-3 cursor-pointer hover:bg-slate-50 transition-all">
+                  <input type="checkbox" name="Souhlas se zpracovanim" required class="mt-1 w-5 h-5 rounded-sm border-slate-300 accent-brand-blue cursor-pointer" />
+                  <span class="text-xs text-slate-600 leading-relaxed">Souhlasím se zpracováním osobních údajů pro účely vedení zdrav. dokumentace <span class="text-red-500">*</span></span>
+                </label>
+              </div>
+              <TextArea name="Důvod vyšetření" label="Hlavní důvod žádosti o vyšetření" placeholder="Stručně popište obtíže..." className="sm:col-span-2" />
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <div class="border-t border-stone-100 bg-stone-50 px-10 py-8 flex flex-col items-center gap-5">
+            <div class="flex justify-center">
+              <Turnstile />
+            </div>
+            <button type="submit" class="w-full max-w-md bg-stone-200 hover:bg-brand-blue border-2 border-stone-300 hover:border-brand-blue text-brand-blue hover:text-white cursor-pointer text-sm font-semibold tracking-[0.14em] uppercase py-4 px-8 rounded-sm transition-all hover:shadow-lg hover:-translate-y-px active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2">
+              Odeslat dokument ke zpracování
+            </button>
+            <p class="text-xs font-medium tracking-[0.1em] uppercase text-stone-400">
+              * Povinné položky
+            </p>
+          </div>
+
+        </form>
+        )}
+
+      </div>
     </div>
+  </div>
 </Layout>
 
 <template id="sibling-template">
-    <div class="sibling-row grid grid-cols-1 sm:grid-cols-12 gap-x-4 gap-y-3 bg-slate-50 p-4 rounded-sm border-2 border-slate-200">
-        <TextInput name="Jméno Sourozence" label="Jméno" placeholder="Jméno a příjmení" className="sm:col-span-5" />
-        <TextInput name="Rok Narození Sourozence" label="Rok narození" placeholder="např. 2010" className="sm:col-span-3" />
-        
-        <div class="sm:col-span-3 flex flex-col gap-2">
-            <span class="text-xs font-semibold tracking-[0.14em] uppercase invisible hidden sm:block">&nbsp;</span>
-            <div class="h-auto sm:h-[52px] flex items-center">
-                <Checkbox name="Zdravý/á" label="Zdráv/a" />
-            </div>
-        </div>
-        
-        <div class="sm:col-span-1 flex flex-col gap-2">
-            <span class="text-xs font-semibold tracking-[0.14em] uppercase invisible hidden sm:block">&nbsp;</span>
-            <button type="button" class="remove-sibling w-full sm:w-auto p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 bg-white sm:bg-transparent border border-slate-200 sm:border-transparent rounded-sm transition-colors flex justify-center items-center h-12 sm:h-[52px]" title="Odebrat">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                <span class="sm:hidden ml-2 font-medium text-slate-500 hover:text-red-500">Odebrat sourozence</span>
-            </button>
-        </div>
+  <div class="sibling-row grid grid-cols-1 sm:grid-cols-12 gap-x-4 gap-y-3 bg-slate-50 p-4 rounded-sm border-2 border-slate-200">
+    <TextInput name="Jméno Sourozence" label="Jméno" placeholder="Jméno a příjmení" className="sm:col-span-5" />
+    <TextInput name="Rok Narození Sourozence" label="Rok narození" placeholder="např. 2010" className="sm:col-span-3" />
+
+    <div class="sm:col-span-3 flex flex-col gap-2">
+      <span class="text-xs font-semibold tracking-[0.14em] uppercase invisible hidden sm:block">&nbsp;</span>
+      <div class="h-auto sm:h-[52px] flex items-center">
+        <Checkbox name="Zdravý/á" options={[{ label: "Zdráv/a" , value: "Ano" }]} layout="inline" />
+      </div>
     </div>
+
+    <div class="sm:col-span-1 flex flex-col gap-2">
+      <span class="text-xs font-semibold tracking-[0.14em] uppercase invisible hidden sm:block">&nbsp;</span>
+      <button type="button" class="remove-sibling w-full sm:w-auto p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 bg-white sm:bg-transparent border border-slate-200 sm:border-transparent rounded-sm transition-colors flex justify-center items-center h-12 sm:h-[52px]" title="Odebrat">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+        <span class="sm:hidden ml-2 font-medium text-slate-500 hover:text-red-500">Odebrat sourozence</span>
+      </button>
+    </div>
+  </div>
 </template>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const container = document.getElementById('siblings-list');
-        const addBtn = document.getElementById('add-sibling-btn');
-        const template = document.getElementById('sibling-template') as HTMLTemplateElement;
-        let siblingCount = 0;
+  document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('siblings-list');
+      const addBtn = document.getElementById('add-sibling-btn');
+      const template = document.getElementById('sibling-template') as HTMLTemplateElement;
+      let siblingCount = 0;
+  
+      if (container && addBtn && template) {
+          addBtn.addEventListener('click', () => {
+              siblingCount++;
+              const clone = template.content.cloneNode(true) as DocumentFragment;
+              const row = clone.querySelector('.sibling-row');
+              
+              // Update names dynamically
+              const jmInput = clone.querySelector('input[name="Jméno Sourozence"]');
+              const rnInput = clone.querySelector('input[name="Rok Narození Sourozence"]');
+              const zdInput = clone.querySelector('input[type="checkbox"]');
+              
+              if (jmInput) jmInput.setAttribute('name', `Sourozenec ${siblingCount} - Jméno`);
+              if (rnInput) rnInput.setAttribute('name', `Sourozenec ${siblingCount} - Rok nar.`);
+              if (zdInput) zdInput.setAttribute('name', `Sourozenec ${siblingCount} - Zdráv/a`);
+              
+              // Add remove listener
+              const removeBtn = clone.querySelector('.remove-sibling');
+              if (removeBtn && row) {
+                  removeBtn.addEventListener('click', () => {
+                      row.remove();
+                  });
+              }
+              
+              container.appendChild(clone);
+          });
+      }
+  
+      // Helper function to toggle container visibility and clear checkboxes
+      const setupToggle = (radioName: string, containerId: string, showValue: string, hideMode: 'hidden' | 'opacity' = 'hidden') => {
+          const radios = document.querySelectorAll(`input[name="${radioName}"]`);
+          const container = document.getElementById(containerId);
+  
+          if (radios.length > 0 && container) {
+              const toggleVisibility = () => {
+                  const checked = document.querySelector(`input[name="${radioName}"]:checked`) as HTMLInputElement | null;
+                  if (checked && checked.value === showValue) {
+                      if (hideMode === 'hidden') {
+                          container.classList.remove('hidden');
+                      } else {
+                          container.classList.remove('opacity-40', 'pointer-events-none');
+                          container.classList.add('opacity-100');
+                          const allInputs = container.querySelectorAll('input, select, textarea') as NodeListOf<HTMLInputElement>;
+                          allInputs.forEach(input => input.disabled = false);
+                      }
+                  } else {
+                      if (hideMode === 'hidden') {
+                          container.classList.add('hidden');
+                      } else {
+                          container.classList.remove('opacity-100');
+                          container.classList.add('opacity-40', 'pointer-events-none');
+                          const allInputs = container.querySelectorAll('input, select, textarea') as NodeListOf<HTMLInputElement>;
+                          allInputs.forEach(input => input.disabled = true);
+                      }
+                      
+                      // Clear inputs and checkboxes within the container
+                      const inputs = container.querySelectorAll('input[type="text"], input[type="number"]') as NodeListOf<HTMLInputElement>;
+                      inputs.forEach(input => {
+                          input.value = '';
+                      });
+                      const checkboxes = container.querySelectorAll('input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
+                      checkboxes.forEach(cb => {
+                          cb.checked = false;
+                      });
+                  }
+              };
+  
+              radios.forEach(radio => {
+                  radio.addEventListener('change', toggleVisibility);
+              });
+  
+              // Initialize state
+              toggleVisibility();
+          }
+      };
+  
+      setupToggle('Rizikové těhotenství', 'rizika-container', 'Ano', 'hidden');
+      setupToggle('Komplikace u porodu', 'komplikace-porod-container', 's komplikacemi', 'hidden');
+      setupToggle('Novorozenec - kojen', 'kojen-container', 'Ano', 'opacity');
+      setupToggle('Novorozenec - Enuresa nocturna', 'enuresa-container', 'Ano', 'opacity');
+      setupToggle('Novorozenec - Problémy s potravou', 'potrava-container', 'Ano', 'opacity');
+      setupToggle('Nosní mandle stav', 'nosni-mandle-container', 'Odstraněny', 'opacity');
+      setupToggle('Discize frenula', 'discize-container', 'Ano', 'opacity');
+      setupToggle('Péče foniatr', 'foniatr-container', 'Ano', 'opacity');
+      setupToggle('Péče psycholog', 'psycholog-container', 'Ano', 'opacity');
+      setupToggle('Péče logoped', 'logoped-container', 'Ano', 'opacity');
 
-        if (container && addBtn && template) {
-            addBtn.addEventListener('click', () => {
-                siblingCount++;
-                const clone = template.content.cloneNode(true) as DocumentFragment;
-                const row = clone.querySelector('.sibling-row');
-                
-                // Update names dynamically
-                const jmInput = clone.querySelector('input[name="Jméno Sourozence"]');
-                const rnInput = clone.querySelector('input[name="Rok Narození Sourozence"]');
-                const zdInput = clone.querySelector('input[type="checkbox"]');
-                
-                if (jmInput) jmInput.setAttribute('name', `Sourozenec ${siblingCount} - Jméno`);
-                if (rnInput) rnInput.setAttribute('name', `Sourozenec ${siblingCount} - Rok nar.`);
-                if (zdInput) zdInput.setAttribute('name', `Sourozenec ${siblingCount} - Zdráv/a`);
-                
-                // Add remove listener
-                const removeBtn = clone.querySelector('.remove-sibling');
-                if (removeBtn && row) {
-                    removeBtn.addEventListener('click', () => {
-                        row.remove();
-                    });
-                }
-                
-                container.appendChild(clone);
-            });
-        }
+      // Disable inputs in inactive school sections so defaults don't get submitted
+      const schoolRadios = document.querySelectorAll('input[name="Typ školy"]');
+      const msDetail = document.querySelector('#nav-ms')?.closest('div')?.querySelector('.grid') as HTMLElement | null;
+      const zsDetail = document.querySelector('#nav-zs')?.closest('div')?.querySelector('.grid') as HTMLElement | null;
 
-        // Helper function to toggle container visibility and clear checkboxes
-        const setupToggle = (radioName: string, containerId: string, showValue: string) => {
-            const radios = document.querySelectorAll(`input[name="${radioName}"]`);
-            const container = document.getElementById(containerId);
+      const updateSchoolInputs = () => {
+          const checked = document.querySelector('input[name="Typ školy"]:checked') as HTMLInputElement | null;
+          const selectedValue = checked?.value;
 
-            if (radios.length > 0 && container) {
-                const toggleVisibility = () => {
-                    const checked = document.querySelector(`input[name="${radioName}"]:checked`) as HTMLInputElement | null;
-                    if (checked && checked.value === showValue) {
-                        container.classList.remove('hidden');
-                    } else {
-                        container.classList.add('hidden');
-                        // Clear all checkboxes within the container
-                        const checkboxes = container.querySelectorAll('input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
-                        checkboxes.forEach(cb => {
-                            cb.checked = false;
-                        });
-                    }
-                };
+          const setDisabled = (el: HTMLElement | null, disabled: boolean) => {
+              if (!el) return;
+              el.querySelectorAll('input, select, textarea').forEach((input) => {
+                  (input as HTMLInputElement).disabled = disabled;
+              });
+          };
 
-                radios.forEach(radio => {
-                    radio.addEventListener('change', toggleVisibility);
-                });
+          setDisabled(msDetail, selectedValue !== 'MŠ');
+          setDisabled(zsDetail, selectedValue !== 'ZŠ');
+      };
 
-                // Initialize state
-                toggleVisibility();
-            }
-        };
-
-        setupToggle('Rizikové těhotenství', 'rizika-container', 'Ano');
-        setupToggle('Komplikace u porodu', 'komplikace-porod-container', 's komplikacemi');
-    });
+      schoolRadios.forEach(r => r.addEventListener('change', updateSchoolInputs));
+      updateSchoolInputs();
+  });
 </script>
