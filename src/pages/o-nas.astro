@@ -85,8 +85,8 @@ const logopeds = [
                 O nás
             </h1>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-                {logopeds.map((logoped) => (
+            <div class="flex flex-col gap-6 max-w-xl">
+                {logopeds.map((logoped, i) => (
                     <article class="border border-gray-200 rounded-lg overflow-hidden flex flex-col cursor-pointer select-none logoped-card">
                         <div class="h-1 bg-brand-blue w-full"></div>
                         <div class="p-5 flex flex-col flex-1">
@@ -94,11 +94,11 @@ const logopeds = [
                                 <strong class="font-semibold text-brand-blue text-base block leading-snug">
                                     {logoped.name}
                                 </strong>
-                                <span class="chevron text-brand-gray text-lg transition-transform mt-0.5 shrink-0">›</span>
+                                <span class="chevron text-brand-gray text-lg transition-transform mt-0.5 shrink-0" style={i === 0 ? 'transform: rotate(90deg)' : ''}>›</span>
                             </div>
                             <p class="text-xs text-brand-gray mb-4 uppercase tracking-wide">{logoped.title}</p>
 
-                            <div class="collapsible hidden">
+                            <div class={`collapsible${i === 0 ? '' : ' hidden'}`}>
                                 <p class="text-xs font-semibold text-brand-gray uppercase tracking-wide mb-1">Zkušenosti</p>
                                 <ul class="font-light text-sm space-y-1.5 text-brand-gray list-disc ml-5 mb-4">
                                     {logoped.experience.map((item) => (
