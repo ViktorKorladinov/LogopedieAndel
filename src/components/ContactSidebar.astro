@@ -14,6 +14,7 @@
             class="w-8 h-8 flex-shrink-0"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
             ><g stroke-width="0"></g><g
                 stroke-linecap="round"
                 stroke-linejoin="round"></g>
@@ -44,24 +45,38 @@
         class="font-normal no-underline block hover:bg-brand-gold bg-brand-blue transition-colors"
     >
         <div class="text-white py-3 pl-5 text-base">
-            <h4 class="text-2xl font-semibold">Kde nás najdete?</h4>
+            <h2 class="text-2xl font-semibold m-0">Kde nás najdete?</h2>
             Ostrovského 253/3, 150 00 Praha 5
         </div>
     </a>
     <div
         class="bg-brand-brown text-white py-3 pl-5 pb-4 text-base leading-snug"
     >
-        <h4 class="text-2xl pb-1 font-semibold">Ordinační hodiny</h4>
-        <span class="pr-5 inline-block w-12">PO</span>
-        <span>8:00 - 16:30</span><br />
-        <span class="pr-5 inline-block w-12">ÚT</span>
-        <span>10:00 - 18:30</span><br />
-        <span class="pr-5 inline-block w-12">ST</span>
-        <span>8:30 - 18:00</span><br />
-        <span class="pr-5 inline-block w-12">ČT</span>
-        <span>8:00 - 14:00</span><br />
-        <span class="pr-5 inline-block w-12">PÁ</span>
-        <span>8:00 - 15:30</span><br />
+        <h2 class="text-2xl pb-1 font-semibold m-0">Ordinační hodiny</h2>
+        <table class="text-base leading-snug border-collapse">
+            <tbody>
+                <tr>
+                    <th scope="row" class="pr-5 text-left font-normal w-12">PO</th>
+                    <td>8:00 - 16:30</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="pr-5 text-left font-normal w-12">ÚT</th>
+                    <td>10:00 - 18:30</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="pr-5 text-left font-normal w-12">ST</th>
+                    <td>8:30 - 18:00</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="pr-5 text-left font-normal w-12">ČT</th>
+                    <td>8:00 - 14:00</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="pr-5 text-left font-normal w-12">PÁ</th>
+                    <td>8:00 - 15:30</td>
+                </tr>
+            </tbody>
+        </table>
         <p class="pt-2">
             Přijmout lze jen po objednání telefonicky nebo e-mailem:
             <a

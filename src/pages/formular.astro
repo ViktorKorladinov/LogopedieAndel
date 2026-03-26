@@ -61,7 +61,7 @@ error = result.error || "";
         )}
 
         {!success && (
-        <form method="POST">
+        <form method="POST" novalidate>
 
           <!-- Section I -->
           <SectionHeader number="I" title="Osobní údaje pacienta" />
@@ -79,37 +79,39 @@ error = result.error || "";
           <!-- Section II -->
           <SectionHeader number="II" title="Školní zařazení" />
           <div class="px-10 py-7 grid gap-2">
+            <fieldset class="border-0 p-0 m-0">
+              <legend class="text-xs font-semibold tracking-[0.14em] uppercase text-slate-500 mb-4">Typ školního zařazení</legend>
 
-            <!-- Nenavštěvuje / Netýká se -->
-            <div class="border-b border-slate-100 pb-6 mb-2 flex items-center">
-              <input type="radio" id="nav-none" value="Nenavštěvuje / Netýká se" name="Typ školy" class="w-5 h-5 border-slate-300 accent-brand-blue cursor-pointer mr-3" checked />
-              <label for="nav-none" class="text-sm font-bold text-brand-blue cursor-pointer select-none">Nenavštěvuje žádné zařízení / Netýká se</label>
-            </div>
-
-            <!-- MŠ -->
-            <div class="border-b border-slate-100 pb-8 flex flex-wrap items-center">
-              <input type="radio" id="nav-ms" value="MŠ" name="Typ školy" class="peer w-5 h-5 border-slate-300 accent-brand-blue cursor-pointer mr-3" />
-              <label for="nav-ms" class="text-sm font-bold text-brand-blue cursor-pointer select-none">Mateřská škola (MŠ)</label>
-
-              <div class="w-full mt-4 grid grid-cols-1 sm:grid-cols-3 gap-6 opacity-40 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto transition-opacity duration-200">
-                <TextInput name="Jméno MŠ" label="Název MŠ" placeholder="Např. MŠ Sluníčko" />
-                <TextInput name="MŠ - od let" label="Od kolika let" type="number" />
-                <RadioGroup name="MŠ docházka" label="Docházka" options={[{label: "Polodenně" , value: "Polodenně" }, {label: "Celodenně" , value: "Celodenně" }]} />
+              <!-- Nenavštěvuje / Netýká se -->
+              <div class="border-b border-slate-100 pb-6 mb-2 flex items-center">
+                <input type="radio" id="nav-none" value="Nenavštěvuje / Netýká se" name="Typ školy" class="w-5 h-5 border-slate-300 accent-brand-blue cursor-pointer mr-3" checked />
+                <label for="nav-none" class="text-sm font-bold text-brand-blue cursor-pointer select-none">Nenavštěvuje žádné zařízení / Netýká se</label>
               </div>
-            </div>
 
-            <!-- ZŠ -->
-            <div class="pt-4 flex flex-wrap items-center">
-              <input type="radio" id="nav-zs" value="ZŠ" name="Typ školy" class="peer w-5 h-5 border-slate-300 accent-brand-blue cursor-pointer mr-3" />
-              <label for="nav-zs" class="text-sm font-bold text-brand-blue cursor-pointer select-none">Základní škola (ZŠ)</label>
+              <!-- MŠ -->
+              <div class="border-b border-slate-100 pb-8 flex flex-wrap items-center">
+                <input type="radio" id="nav-ms" value="MŠ" name="Typ školy" class="peer w-5 h-5 border-slate-300 accent-brand-blue cursor-pointer mr-3" />
+                <label for="nav-ms" class="text-sm font-bold text-brand-blue cursor-pointer select-none">Mateřská škola (MŠ)</label>
 
-              <div class="w-full mt-4 grid grid-cols-1 sm:grid-cols-3 gap-6 opacity-40 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto transition-opacity duration-200">
-                <TextInput name="Jméno ZŠ" label="Název ZŠ" placeholder="Např. ZŠ Komenského" />
-                <TextInput name="ZŠ ročník" label="Ročník" placeholder="Např. 3. třída" />
-                <TextInput name="ZŠ prospěch" label="Prospěch" placeholder="Např. 1, 2" />
+                <div class="w-full mt-4 grid grid-cols-1 sm:grid-cols-3 gap-6 opacity-40 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto transition-opacity duration-200">
+                  <TextInput name="Jméno MŠ" label="Název MŠ" placeholder="Např. MŠ Sluníčko" />
+                  <TextInput name="MŠ - od let" label="Od kolika let" type="number" />
+                  <RadioGroup name="MŠ docházka" label="Docházka" options={[{label: "Polodenně" , value: "Polodenně" }, {label: "Celodenně" , value: "Celodenně" }]} />
+                </div>
               </div>
-            </div>
 
+              <!-- ZŠ -->
+              <div class="pt-4 flex flex-wrap items-center">
+                <input type="radio" id="nav-zs" value="ZŠ" name="Typ školy" class="peer w-5 h-5 border-slate-300 accent-brand-blue cursor-pointer mr-3" />
+                <label for="nav-zs" class="text-sm font-bold text-brand-blue cursor-pointer select-none">Základní škola (ZŠ)</label>
+
+                <div class="w-full mt-4 grid grid-cols-1 sm:grid-cols-3 gap-6 opacity-40 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto transition-opacity duration-200">
+                  <TextInput name="Jméno ZŠ" label="Název ZŠ" placeholder="Např. ZŠ Komenského" />
+                  <TextInput name="ZŠ ročník" label="Ročník" placeholder="Např. 3. třída" />
+                  <TextInput name="ZŠ prospěch" label="Prospěch" placeholder="Např. 1, 2" />
+                </div>
+              </div>
+            </fieldset>
           </div>
 
           <!-- Section III -->
@@ -337,7 +339,7 @@ error = result.error || "";
 
               <div class="flex flex-col justify-end">
                 <label class="flex items-start gap-3 bg-white border-2 border-slate-300 rounded-sm p-3 cursor-pointer hover:bg-slate-50 transition-all">
-                  <input type="checkbox" name="Souhlas se zpracovanim" required class="mt-1 w-5 h-5 rounded-sm border-slate-300 accent-brand-blue cursor-pointer" />
+                  <input type="checkbox" name="Souhlas se zpracovanim" required aria-required="true" class="mt-1 w-5 h-5 rounded-sm border-slate-300 accent-brand-blue cursor-pointer" />
                   <span class="text-xs text-slate-600 leading-relaxed">Souhlasím se zpracováním osobních údajů pro účely vedení zdrav. dokumentace <span class="text-red-500">*</span></span>
                 </label>
               </div>
@@ -505,5 +507,88 @@ error = result.error || "";
 
       schoolRadios.forEach(r => r.addEventListener('change', updateSchoolInputs));
       updateSchoolInputs();
+
+      // --- Accessible form validation ---
+      const form = document.querySelector('form');
+      if (form) {
+          const showError = (input: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement, message: string) => {
+              // Remove any existing error
+              clearError(input);
+
+              const errorId = (input.id || input.name) + '-error';
+              const errorSpan = document.createElement('span');
+              errorSpan.id = errorId;
+              errorSpan.className = 'text-red-600 text-xs mt-1 block font-medium';
+              errorSpan.setAttribute('role', 'alert');
+              errorSpan.textContent = message;
+
+              input.setAttribute('aria-describedby', errorId);
+              input.setAttribute('aria-invalid', 'true');
+              input.classList.add('border-red-400');
+
+              // Insert after the input
+              input.parentElement?.appendChild(errorSpan);
+          };
+
+          const clearError = (input: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement) => {
+              const errorId = input.getAttribute('aria-describedby');
+              if (errorId) {
+                  const existing = document.getElementById(errorId);
+                  existing?.remove();
+              }
+              input.removeAttribute('aria-describedby');
+              input.removeAttribute('aria-invalid');
+              input.classList.remove('border-red-400');
+          };
+
+          // Clear error on input
+          form.addEventListener('input', (e) => {
+              const target = e.target as HTMLInputElement;
+              if (target && target.getAttribute('aria-invalid')) {
+                  clearError(target);
+              }
+          });
+
+          form.addEventListener('change', (e) => {
+              const target = e.target as HTMLInputElement;
+              if (target && target.getAttribute('aria-invalid')) {
+                  clearError(target);
+              }
+          });
+
+          form.addEventListener('submit', (e) => {
+              // Clear all previous errors
+              form.querySelectorAll('[aria-invalid]').forEach(el => {
+                  clearError(el as HTMLInputElement);
+              });
+
+              const requiredFields = form.querySelectorAll('[required]:not(:disabled)') as NodeListOf<HTMLInputElement>;
+              let firstInvalid: HTMLElement | null = null;
+
+              requiredFields.forEach(field => {
+                  let isValid = true;
+
+                  if (field.type === 'checkbox') {
+                      isValid = field.checked;
+                  } else if (field.type === 'email') {
+                      isValid = field.value.trim() !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value);
+                  } else {
+                      isValid = field.value.trim() !== '';
+                  }
+
+                  if (!isValid) {
+                      const label = field.closest('div, label')?.querySelector('label, span')?.textContent?.replace('*', '').trim() || 'Toto pole';
+                      showError(field, `${label} je povinné pole.`);
+                      if (!firstInvalid) firstInvalid = field;
+                  }
+              });
+
+              if (firstInvalid) {
+                  e.preventDefault();
+                  (firstInvalid as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  (firstInvalid as HTMLElement).focus();
+              }
+          });
+      }
   });
 </script>
