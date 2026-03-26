@@ -2,11 +2,21 @@
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import { getImage } from "astro:assets";
+
+import bgMainSrc from "../assets/bg-main.png";
+import bgImgMobileSrc from "../assets/bg-img-default-mobile.jpg";
+import bgImgDesktopSrc from "../assets/bg-img-default.jpg";
+import bgImgLgSrc from "../assets/bg-img-default2.jpg";
+
+const optimizedBgImgMobile = await getImage({ src: bgImgMobileSrc, format: 'webp' });
+const optimizedBgImgDesktop = await getImage({ src: bgImgDesktopSrc, format: 'webp' });
+const optimizedBgImgLg = await getImage({ src: bgImgLgSrc, format: 'webp' });
 
 const {
 	title = "Logopedie Anděl",
 	description = "Jsme specializovaná logopedická ambulance pro dospělé a děti. Nabízíme komplexní péči v Praze 5 na Andělu.",
-	image = "/assets/bg-img-default.jpg",
+	image = optimizedBgImgDesktop.src,
 	hideBackground = false,
 } = Astro.props;
 
@@ -77,9 +87,15 @@ const canonicalURL = new URL(
 			{
 				!hideBackground && (
 					<>
-						<div class="absolute top-0 left-0 w-full h-[500px] bg-[url('/assets/bg-main.png')] bg-repeat-x z-0"></div>
+						<div 
+							class="absolute top-0 left-0 w-full h-[500px] bg-repeat-x z-0"
+							style={`background-image: url(${bgMainSrc.src});`}
+						></div>
 
-						<div class="absolute top-0 left-0 w-full h-full z-10 bg-[url('/assets/bg-img-default-mobile.jpg')] md:bg-[url('/assets/bg-img-default.jpg')] lg:bg-[url('/assets/bg-img-default2.jpg')] bg-top md:bg-right-top lg:bg-top bg-no-repeat"></div>
+						<div 
+							class="hero-bg-responsive absolute top-0 left-0 w-full h-full z-10 bg-top md:bg-right-top lg:bg-top bg-no-repeat"
+							style={`--bg-mobile: url(${optimizedBgImgMobile.src}); --bg-desktop: url(${optimizedBgImgDesktop.src}); --bg-lg: url(${optimizedBgImgLg.src});`}
+						></div>
 					</>
 				)
 			}
@@ -89,5 +105,20 @@ const canonicalURL = new URL(
 			</div>
 		</main>
 		<Footer />
+		<style>
+			.hero-bg-responsive {
+				background-image: var(--bg-mobile);
+			}
+			@media (min-width: 768px) {
+				.hero-bg-responsive {
+					background-image: var(--bg-desktop);
+				}
+			}
+			@media (min-width: 1024px) {
+				.hero-bg-responsive {
+					background-image: var(--bg-lg);
+				}
+			}
+		</style>
 	</body>
 </html>

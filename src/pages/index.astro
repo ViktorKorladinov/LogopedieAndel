@@ -1,6 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import ContactSidebar from "../components/ContactSidebar.astro";
+import { Image } from "astro:assets";
+
+import childImgMobile from "../assets/button-child-mobile.png";
+import childImgDesktop from "../assets/button-child.png";
 ---
 
 <Layout title="Logopedie Anděl">
@@ -42,9 +46,20 @@ import ContactSidebar from "../components/ContactSidebar.astro";
                 >
                 <a
                     href="/pece-pro-deti"
-                    class="text-sm text-white bg-brand-gold inline-block py-2.5 w-[130px] md:w-[188px] text-center no-underline mt-20 md:mt-4 relative hover:bg-brand-blue font-bold after:content-[''] after:bg-[url('/assets/button-child-mobile.png')] md:after:bg-[url('/assets/button-child.png')] after:absolute after:w-[121px] md:after:w-[175px] after:h-[71px] md:after:h-[102px] after:top-[-65px] md:after:top-[-95px] after:left-1 md:after:left-2.5"
-                    >DĚTI</a
+                    class="text-sm text-white bg-brand-gold inline-block py-2.5 w-[130px] md:w-[188px] text-center no-underline mt-20 md:mt-4 relative hover:bg-brand-blue font-bold"
                 >
+                    DĚTI
+                    <Image 
+                        src={childImgMobile}
+                        alt="Obrázek dětí"
+                        class="absolute w-[121px] h-[71px] top-[-65px] left-1 md:hidden"
+                    />
+                    <Image 
+                        src={childImgDesktop}
+                        alt="Obrázek dětí"
+                        class="absolute hidden md:block w-[175px] h-[102px] top-[-95px] left-2.5"
+                    />
+                </a>
             </h2>
 
             <p class="text-sm pb-4 md:max-w-[613px]">
