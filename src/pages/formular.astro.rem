@@ -1,7 +1,3 @@
-HTML Formatter & Beautifier
-
-Clean, indent, and organize your HTML code instantly.
-
 ---
 import Layout from "../layouts/Layout.astro";
 import Turnstile from "../components/Turnstile.astro";
